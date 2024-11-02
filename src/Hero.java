@@ -127,8 +127,8 @@ public class Hero implements Subject{
                 System.out.println("Cambie de casilla arriba");
                 canMove = move(-1,0);
                 if(!canMove){
-                    Y+=velocidad;
-                }
+                    Y+=velocidad;}
+
             }
         }
         else if(kh.downPressed){
@@ -141,6 +141,7 @@ public class Hero implements Subject{
                 canMove =  move(1,  0);
                 if(!canMove){
                     Y-=velocidad;
+                    aVertical-=velocidad;
                 } else {
                     aVertical = 0;
                 }

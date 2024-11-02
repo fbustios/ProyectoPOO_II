@@ -25,8 +25,8 @@ public class Hero implements Subject{
     private int cantBombas = 1;
     private GamePanel panel;
     private KeyHandler kh;
-    private double X;
-    private double Y;
+    private int X;
+    private int Y;
     private int aHorizontal;
     private int aVertical;
     private boolean canMove = true;
@@ -92,22 +92,29 @@ public class Hero implements Subject{
 
 
 
-    public boolean move(int dx, int dy){
-        Coordenada n = tablero.getCoordenada(posicion[0]+dx,posicion[1]+dy);
-        Coordenada a = tablero.getCoordenada(posicion[0],posicion[1]);
-        if(n != null){
-            n.setHero(this);
-            a.setHero(null);
-            //notifyObservers(posicion[0]+dx,posicion[1]+dy);
-            System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
-            posicion[0]+=dx;
-            posicion[1]+=dy;
-            return true;
+    public boolean move(int dx, int dy) {
+        System.out.println("dx:" + dx + " " + "dy: " + dy);
+        Coordenada n = tablero.getCoordenada(posicion[0] + dx, posicion[1] + dy);
+        Coordenada a = tablero.getCoordenada(posicion[0], posicion[1]);
+        if (n != null) {
+            if (!n.getHayMuro()) {
+                n.setHero(this);
+                a.setHero(null);
+                //notifyObservers(posicion[0]+dx,posicion[1]+dy);
+                System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
+                posicion[0] += dx;
+                posicion[1] += dy;
+                return true;
+            } else {
+                //notifyObservers(posicion[0],posicion[1]);
+                System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
+                System.out.println("No me pude mover");
+                return false;
+            }
         }
-        //notifyObservers(posicion[0],posicion[1]);
-        System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
         return false;
     }
+
 
     public void update(){
         if(kh.upPressed | kh.downPressed | kh.leftPressed | kh.rightPressed){
@@ -118,7 +125,10 @@ public class Hero implements Subject{
             if(aVertical < 0){  //(Y < posicion[1]*48 - un poco menos de la altura 20 o 30)
                 aVertical = 48;
                 System.out.println("Cambie de casilla arriba");
-                move(-1,0);
+                canMove = move(-1,0);
+                if(!canMove){
+                    Y+=velocidad;
+                }
             }
         }
         else if(kh.downPressed){
@@ -128,7 +138,15 @@ public class Hero implements Subject{
             if(aVertical > 48){ //(Y > (posicion[1]+1)*48 - altura 40)
                 aVertical = 0;
                 System.out.println("Cambie de casilla abajo");
-                move(1,0);
+                canMove =  move(1,  0);
+                if(!canMove){
+                    Y-=velocidad;
+                } else {
+                    aVertical = 0;
+                }
+
+
+
             }
         }
         else if(kh.leftPressed){
@@ -138,7 +156,10 @@ public class Hero implements Subject{
             if(aHorizontal < 0){ //(X < posicion[0]*48 - rango de error 8)
                 aHorizontal = 48;
                 System.out.println("Cambie de casilla a la izquierda");
-                move(0,-1);
+                canMove = move(0,-1);
+                if(!canMove){
+                    X+=velocidad;
+                }
             }
         }
         else if(kh.rightPressed){
@@ -148,7 +169,10 @@ public class Hero implements Subject{
             if(aHorizontal > 24){ //(X > (posicion[0]+1)*48 - ancho del personaje 40)
                 aHorizontal = 0;
                 System.out.println("Cambie de casilla a la derecha");
-                move(0,1);
+                canMove = move(0,1);
+                if(!canMove){
+                    X-=velocidad;
+                }
             }
              //falta sincronizarlo bien...
         }
@@ -214,8 +238,8 @@ public class Hero implements Subject{
                 if(spriteNumber==3){image = derecha2;}
                 break;
         }
-        if(canMove){
-        pincel.drawImage(image, (int)X, (int)Y, tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);}
+        //System.out.println("X: " + X + " " + "Y: " + Y);
+        pincel.drawImage(image, X, Y, tablero.getCoordenada(1,1).length-42, tablero.getCoordenada(1,1).length-42, null);
     }
 
     public int getVidas(){

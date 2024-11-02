@@ -57,4 +57,17 @@ public class Tablero {
             }
         }
     }
+
+    public void printTablero(){
+        for(int i = 0; i < 13 ; i++){
+            System.out.println();
+            for(int j = 0; j < 15; j++){
+                if(tablero[i][j].getHayMuro()){
+                    System.out.print("#");
+                } else {
+                    System.out.print(".");
+                }
+            }
+        }
+    }
 }

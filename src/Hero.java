@@ -122,7 +122,7 @@ public class Hero implements Subject{
             direction = "up";
             Y-=velocidad;
             aVertical-=velocidad;
-            if(aVertical < 0){  //(Y < posicion[1]*48 - un poco menos de la altura 20 o 30)
+            if(aVertical < 0){  //(aVertical < posicion[1]*48 - un poco menos de la altura 20 o 30)
                 aVertical = 48;
                 System.out.println("Cambie de casilla arriba");
                 canMove = move(-1,0);
@@ -135,8 +135,7 @@ public class Hero implements Subject{
             direction = "down";
             Y+=velocidad;
             aVertical+=velocidad;
-            if(aVertical > 48){ //(Y > (posicion[1]+1)*48 - altura 40)
-                aVertical = 0;
+            if(aVertical > 48){ //(aVertical > (posicion[1]+1)*48 - altura 40)
                 System.out.println("Cambie de casilla abajo");
                 canMove =  move(1,  0);
                 if(!canMove){
@@ -154,7 +153,7 @@ public class Hero implements Subject{
             direction = "left";
             X-=velocidad;
             aHorizontal -= velocidad;
-            if(aHorizontal < 0){ //(X < posicion[0]*48 - rango de error 8)
+            if(aHorizontal < 0){ //(aHorizontal < posicion[0]*48 - rango de error 8)
                 aHorizontal = 48;
                 System.out.println("Cambie de casilla a la izquierda");
                 canMove = move(0,-1);
@@ -167,7 +166,7 @@ public class Hero implements Subject{
             direction = "right";
             X+=velocidad;
             aHorizontal += velocidad;
-            if(aHorizontal > 24){ //(X > (posicion[0]+1)*48 - ancho del personaje 40)
+            if(aHorizontal > 18){ //( > (posicion[0]+1)*48 - ancho del personaje 40)
                 aHorizontal = 0;
                 System.out.println("Cambie de casilla a la derecha");
                 canMove = move(0,1);
@@ -240,7 +239,7 @@ public class Hero implements Subject{
                 break;
         }
         //System.out.println("X: " + X + " " + "Y: " + Y);
-        pincel.drawImage(image, X, Y, tablero.getCoordenada(1,1).length-42, tablero.getCoordenada(1,1).length-42, null);
+        pincel.drawImage(image, X, Y, tablero.getCoordenada(1,1).length-40, tablero.getCoordenada(1,1).length-40, null);
     }
 
     public int getVidas(){

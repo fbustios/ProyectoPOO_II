@@ -20,10 +20,11 @@ public class Tablero {
 
     public void setMurosMetal(){
         for(int i = 1; i < tablero.length; i+=2){
-            for(int j = 0; j <tablero[i].length; j+=2){
+            for(int j = 1; j <tablero[i].length; j+=2){
                 tablero[i][j].setMuroMetal();
             }
         }
+
     }
 
     public void setMurosLadrillo(){
@@ -38,9 +39,11 @@ public class Tablero {
         }
     }
 
-    public void startLevel(){
+    public void startLevel(Hero hero, int nivel){
         setMurosMetal();
         setMurosLadrillo();
+        tablero[0][0].setHero(hero);
+        this.nivelActual = nivel;
     }
 
     public Coordenada getCoordenada(int x, int y){

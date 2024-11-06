@@ -1,21 +1,16 @@
 public class MonG extends Villano{
 
-    public MonG(){
-        nivelInicial = 14;
-        velocidad = 1.5;
-        atm = true;
-        ia = "Lv4";
-        puntaje = 4000;
-        vivo = true;
+    public MonG(int x,int y, Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
+        super(x,y,tab,nivelInicial,velocidad,atm,puntaje);
     }
 
     @Override
-    public void update(int x, int y, GamePanel panel) {
-        moverVillano(x,y,panel);
+    public void update(int x, int y) {
+        moverVillano(x,y);
     }
 
     @Override
-    public void moverVillano(int x, int y, GamePanel panel) {
+    public void moverVillano(int x, int y) {
     }
 
 

@@ -1,21 +1,16 @@
 public class Espon extends Villano{
 
-    public Espon(){
-        nivelInicial = 6;
-        velocidad = 0.33334;
-        atm = true;
-        ia = "Lv1";
-        puntaje = 1000;
-        vivo = true;
+    public Espon(int x,int y, Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
+        super(x,y,tab,nivelInicial,velocidad,atm,puntaje);
     }
 
     @Override
-    public void update(int x, int y, GamePanel panel) {
-        moverVillano(x,y,panel);
+    public void update(int x, int y) {
+        moverVillano(x,y);
     }
 
     @Override
-    public void moverVillano(int x, int y, GamePanel panel) {
+    public void moverVillano(int x, int y) {
     }
 
 

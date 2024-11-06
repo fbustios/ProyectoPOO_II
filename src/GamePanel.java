@@ -39,8 +39,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     }
 
     public void startGameThread(){
-        tab.startLevel();
-        tab.getCoordenada(0,0).setHero(hero);
+        tab.startLevel(hero,0);
+        //esto hay que meterlo en start level
         gameThread = new Thread(this);
         gameThread.start();
     }
@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         while(gameThread != null){
 
             update();
+
             repaint();
 
             try{

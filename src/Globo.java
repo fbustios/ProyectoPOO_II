@@ -1,21 +1,20 @@
 public class Globo extends Villano{
-
-    public Globo(){
-        nivelInicial = 1;
-        velocidad = 0.66667;
-        atm = false;
-        ia = "Rnd";
-        puntaje = 100;
-        vivo = true;
+    VillainMovement rand;
+    public Globo(int x,int y, Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
+        super(x,y,tab,nivelInicial,velocidad,atm,puntaje);
+        this.rand = new RandomSystem(this,tab);
     }
 
     @Override
-    public void update(int x, int y, GamePanel panel) {
-        moverVillano(x,y,panel);
+    public void update(int x, int y) {
+        moverVillano(x,y);
     }
 
     @Override
-    public void moverVillano(int x, int y, GamePanel panel) {
-
+    public void moverVillano(int x, int y) {
+        rand.updateGraphics();
+        //rand.draw();
     }
+
+
 }

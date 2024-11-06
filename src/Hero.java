@@ -93,7 +93,6 @@ public class Hero implements Subject{
 
 
     public boolean move(int dx, int dy) {
-        System.out.println("dx:" + dx + " " + "dy: " + dy);
         Coordenada n = tablero.getCoordenada(posicion[0] + dx, posicion[1] + dy);
         Coordenada a = tablero.getCoordenada(posicion[0], posicion[1]);
         if (n != null) {
@@ -101,9 +100,9 @@ public class Hero implements Subject{
                 n.setHero(this);
                 a.setHero(null);
                 //notifyObservers(posicion[0]+dx,posicion[1]+dy);
-                System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
                 posicion[0] += dx;
                 posicion[1] += dy;
+                System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
                 return true;
             } else {
                 //notifyObservers(posicion[0],posicion[1]);
@@ -121,60 +120,47 @@ public class Hero implements Subject{
         if(kh.upPressed){
             direction = "up";
             Y-=velocidad;
-            aVertical-=velocidad;
-            if(aVertical < 0){  //(aVertical < posicion[1]*48 - un poco menos de la altura 20 o 30)
-                aVertical = 48;
+            if(Y < posicion[0]*48 - 10){
                 System.out.println("Cambie de casilla arriba");
                 canMove = move(-1,0);
                 if(!canMove){
-                    Y+=velocidad;}
-
+                    Y+=velocidad;
+                    Y+=velocidad;
+                }
             }
         }
         else if(kh.downPressed){
             direction = "down";
             Y+=velocidad;
-            aVertical+=velocidad;
-            if(aVertical > 48){ //(aVertical > (posicion[1]+1)*48 - altura 40)
+            if(Y > (posicion[0]+1)*48 - 45){
                 System.out.println("Cambie de casilla abajo");
                 canMove =  move(1,  0);
-                if(!canMove){
-                    Y-=velocidad;
-                    aVertical-=velocidad;
-                } else {
-                    aVertical = 0;
+                if(!canMove) {
+                    Y -= velocidad;
                 }
-
-
-
             }
         }
         else if(kh.leftPressed){
             direction = "left";
             X-=velocidad;
-            aHorizontal -= velocidad;
-            if(aHorizontal < 0){ //(aHorizontal < posicion[0]*48 - rango de error 8)
-                aHorizontal = 48;
+            if(X < posicion[1]*48 - 10){
                 System.out.println("Cambie de casilla a la izquierda");
                 canMove = move(0,-1);
-                if(!canMove){
-                    X+=velocidad;
+                if(!canMove) {
+                    X += velocidad;
                 }
             }
         }
         else if(kh.rightPressed){
             direction = "right";
             X+=velocidad;
-            aHorizontal += velocidad;
-            if(aHorizontal > 18){ //( > (posicion[0]+1)*48 - ancho del personaje 40)
-                aHorizontal = 0;
+            if(X > (posicion[1]+1)*48 - 40){
                 System.out.println("Cambie de casilla a la derecha");
                 canMove = move(0,1);
                 if(!canMove){
                     X-=velocidad;
                 }
             }
-             //falta sincronizarlo bien...
         }
         //mueve la animacion
         spriteCounter ++;
@@ -238,8 +224,8 @@ public class Hero implements Subject{
                 if(spriteNumber==3){image = derecha2;}
                 break;
         }
-        //System.out.println("X: " + X + " " + "Y: " + Y);
-        pincel.drawImage(image, X, Y, tablero.getCoordenada(1,1).length-40, tablero.getCoordenada(1,1).length-40, null);
+
+        pincel.drawImage(image, X, Y, tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
 
     public int getVidas(){
@@ -259,7 +245,7 @@ public class Hero implements Subject{
     }
 
     public void notifyObservers(int x, int y){
-        for(Observer observer : observersList) observer.update(x,y,panel);
+        for(Observer observer : observersList) observer.update(x,y);
     }
     public void checkState(){
         Coordenada a = tablero.getCoordenada(posicion[0],posicion[1]);

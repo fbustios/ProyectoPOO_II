@@ -10,11 +10,10 @@ import static java.lang.Math.floor;
 
 
 public class Hero implements Subject{
-    private List<Observer> observersList;
+    private List<Observer> observersList = new ArrayList<>();
     private int vidas;
     private double velocidad;
     private Tablero tablero;
-    private ArrayList <Observer> observers;
     private int[] posicion = new int[2];
     private static Hero instancia = null;
     private Detonador detonador = null;

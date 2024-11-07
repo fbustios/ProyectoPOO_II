@@ -1,3 +1,5 @@
+import java.awt.*;
+
 public class Haki extends Villano{
 
     public Haki(int x,int y, Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
@@ -5,10 +7,10 @@ public class Haki extends Villano{
     }
 
     @Override
-    public void update(int x, int y) {
-        moverVillano(x,y);
+    public void update(int x, int y, Graphics2D pincel) {
+        moverVillano(x,y,pincel);
     }
-    public void moverVillano(int x, int y) {
+    public void moverVillano(int x, int y, Graphics2D pincel) {
 
     }
 }

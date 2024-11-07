@@ -1,5 +1,7 @@
+import java.awt.*;
+
 public interface Subject {
     void attach(Observer observer);
     void detach(Observer observer);
-    void notifyObservers(int x, int y);
+    void notifyObservers(int x, int y, Graphics2D p);
 }

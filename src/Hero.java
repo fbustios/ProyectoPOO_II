@@ -99,13 +99,11 @@ public class Hero implements Subject{
             if (!n.getHayMuro()) {
                 n.setHero(this);
                 a.setHero(null);
-                //notifyObservers(posicion[0]+dx,posicion[1]+dy);
                 posicion[0] += dx;
                 posicion[1] += dy;
                 System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
                 return true;
             } else {
-                //notifyObservers(posicion[0],posicion[1]);
                 System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
                 System.out.println("No me pude mover");
                 return false;
@@ -202,6 +200,7 @@ public class Hero implements Subject{
 
     public void draw(Graphics2D pincel){
         BufferedImage image = null;
+        notifyObservers(posicion[0],posicion[1],pincel);
         switch(direction){
             case "up":
                 if(spriteNumber==1){image = atras0;}
@@ -238,14 +237,14 @@ public class Hero implements Subject{
         return posicion;
     }
     public void attach(Observer observer){
-        observers.add(observer);
+        observersList.add(observer);
     }
     public void detach(Observer observer){
-        observers.remove(observer);
+        observersList.remove(observer);
     }
 
-    public void notifyObservers(int x, int y){
-        for(Observer observer : observersList) observer.update(x,y);
+    public void notifyObservers(int x, int y,Graphics2D pincel){
+        for(Observer observer : observersList) observer.update(x,y,pincel);
     }
     public void checkState(){
         Coordenada a = tablero.getCoordenada(posicion[0],posicion[1]);

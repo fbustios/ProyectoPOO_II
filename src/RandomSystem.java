@@ -16,7 +16,6 @@ public class RandomSystem implements VillainMovement {
     }
 
     public boolean move(int dx, int dy) {
-        Random rand = new Random();
         int X = v.getX();
         int Y = v.getY();
         Coordenada n = tablero.getCoordenada(X + dx, Y + dy);
@@ -37,8 +36,10 @@ public class RandomSystem implements VillainMovement {
     @Override
     public void updateGraphics() {
         Random rand = new Random();
-        int X = v.getX();
-        int Y = v.getY();
+        int x = v.getX();
+        int y = v.getY();
+        int screenX = v.getScreenX();
+        int screenY = v.getScreenY();
         int dx = rand.nextInt(-1,1); int s = rand.nextInt(0,1);
         int dy = 0;
         if(s==1){
@@ -46,64 +47,66 @@ public class RandomSystem implements VillainMovement {
             dx = dy;
             dy = temp;
         }
-
         double velocidad = v.getVelocidad();
             if (dx == -1) {
                 direction = "up";
-                Y -= velocidad;
-                v.setXY(X, Y);
+                screenY -= velocidad;
+                v.setScreenXY(screenX, screenY);
 
-                if (Y < X * 48 - 10) {
-                    System.out.println("Cambie de casilla arriba");
+                if (screenY < x * 48 - 10) {
                     canMove = move(dx,dy);
                     if (!canMove) {
-                        Y += velocidad;
-                        Y += velocidad;
-                        v.setXY(X, Y);
+                        screenY += velocidad;
+                        screenY += velocidad;
+                        v.setScreenXY(screenX, screenY);
                     }
                 }
-            } else if (dx==1) {
+            }
+            if (dx==1) {
                 direction = "down";
-                Y += velocidad;
-                v.setXY(X, Y);
-                if (Y > (X + 1) * 48 - 45) {
+                screenY += velocidad;
+                v.setScreenXY(screenX, screenY);
+                if (screenY > (x + 1) * 48 - 45) {
                     System.out.println("Cambie de casilla abajo");
                     canMove = move(1,0);
                     if (!canMove) {
-                        Y -= velocidad;
-                        v.setXY(X, Y);
+                        screenY -= velocidad;
+                        v.setScreenXY(screenX, screenY);
                     }
                 }
-            } else if (dy == -1) {
+            }
+            if (dy == -1) {
                 direction = "left";
-                X -= velocidad;
-                v.setXY(X, Y);
-                if (X < Y * 48 - 10) {
+                screenX -= velocidad;
+                v.setXY(screenX, screenY);
+                if (screenX < y * 48 - 10) {
                     System.out.println("Cambie de casilla a la izquierda");
                     canMove = move(0,-1);
                     if (!canMove) {
-                        X += velocidad;
-                        v.setXY(X, Y);
+                        screenX += velocidad;
+                        v.setScreenXY(screenX, screenY);
                     }
                 }
-            } else if (dy == 1) {
+            }
+            if (dy == 1) {
                 direction = "right";
-                X += velocidad;
-                v.setXY(X, Y);
-                if (X > (Y + 1) * 48 - 40) {
+                screenX += velocidad;
+                v.setScreenXY(screenX, screenY);
+                if (screenX > (x + 1) * 48 - 40) {
                     System.out.println("Cambie de casilla a la derecha");
                     canMove = move(0,1);
                     if (!canMove) {
-                        X -= velocidad;
-                        v.setXY(X, Y);
+                        screenX -= velocidad;
+                        v.setScreenXY(screenX, screenY);
                     }
                 }
             }
     }
 
     public void draw(Graphics2D pincel){
-        BufferedImage image = null;
-        pincel.drawImage(image, v.getX(), v.getY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+        System.out.println(v.getX() + " " + v.getY());
+        BufferedImage image = v.getImage();
+        pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
 
 };

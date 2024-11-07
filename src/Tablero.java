@@ -44,6 +44,10 @@ public class Tablero {
         setMurosLadrillo();
         tablero[0][0].setHero(hero);
         this.nivelActual = nivel;
+        hero.attach(new Globo(2,10,this,1,2/3,100,true));
+        //hero.attach(new Globo(4,5,this,1,2/3,100,true));
+        //hero.attach(new Globo(10,11,this,1,2/3,100,true));
+        //hero.attach(new Globo(8,4,this,1,2/3,100,true));
     }
 
     public Coordenada getCoordenada(int x, int y){

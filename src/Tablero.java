@@ -30,9 +30,14 @@ public class Tablero {
     public void setMurosLadrillo(){
         Random rand = new Random();
         int cant = rand.nextInt((tablero.length * tablero[0].length));
+        boolean ponerPuerta = true;
         for(int i = 0; i < cant; i+=2){
             int idx = rand.nextInt(2, tablero.length);
             int idx2 = rand.nextInt(2, tablero[0].length);
+            if(ponerPuerta){
+                tablero[idx][idx2].setPuerta(new Puerta());
+                ponerPuerta = false;
+            }
             if(!tablero[idx][idx2].getHayMuro()){
                 tablero[idx][idx2].setMuroLadrillo();
             }
@@ -44,10 +49,10 @@ public class Tablero {
         setMurosLadrillo();
         tablero[0][0].setHero(hero);
         this.nivelActual = nivel;
-        hero.attach(new Globo(2,10,this,1,2/3,100,true));
-        //hero.attach(new Globo(4,5,this,1,2/3,100,true));
-        //hero.attach(new Globo(10,11,this,1,2/3,100,true));
-        //hero.attach(new Globo(8,4,this,1,2/3,100,true));
+        hero.attach(new Globo(6,6,this,1,1,100,true));
+        hero.attach(new Globo(4,5,this,1,2/3,100,true));
+        hero.attach(new Globo(10,11,this,1,2/3,100,true));
+        hero.attach(new Globo(8,4,this,1,2/3,100,true));
     }
 
     public Coordenada getCoordenada(int x, int y){

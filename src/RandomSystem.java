@@ -7,8 +7,10 @@ import java.util.Random;
 public class RandomSystem implements VillainMovement {
     private boolean canMove = true;
     private String direction = "hola";
+    private String d = "Down";
     private Villano v;
     private Tablero tablero;
+    private int cont = 0;
 
     RandomSystem(Villano villano, Tablero tablero){
         this.v = villano;
@@ -16,15 +18,15 @@ public class RandomSystem implements VillainMovement {
     }
 
     public boolean move(int dx, int dy) {
-        int X = v.getX();
-        int Y = v.getY();
-        Coordenada n = tablero.getCoordenada(X + dx, Y + dy);
-        Coordenada a = tablero.getCoordenada(X, Y);
+        Coordenada n = tablero.getCoordenada(v.getX() + dx,  v.getY() + dy);
+        Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
         if (n != null) {
             if (!n.getHayMuro()) {
                 n.setVillano(v);
                 a.setVillano(null);
-                v.setXY(X+dx, Y+dy);
+                System.out.println("dx: " + dx);
+                System.out.println("dx: " + dy);
+                v.setXY(v.getX()+dx, v.getX()+dy);
                 return true;
             } else {
                 return false;
@@ -40,67 +42,53 @@ public class RandomSystem implements VillainMovement {
         int y = v.getY();
         int screenX = v.getScreenX();
         int screenY = v.getScreenY();
-        int dx = rand.nextInt(-1,1); int s = rand.nextInt(0,1);
-        int dy = 0;
-        if(s==1){
-            int temp = dx;
-            dx = dy;
-            dy = temp;
-        }
+
+
         double velocidad = v.getVelocidad();
-            if (dx == -1) {
+            if (d == "Up") {
                 direction = "up";
                 screenY -= velocidad;
-                v.setScreenXY(screenX, screenY);
 
                 if (screenY < x * 48 - 10) {
-                    canMove = move(dx,dy);
+                    canMove = move(-1,0);
                     if (!canMove) {
                         screenY += velocidad;
                         screenY += velocidad;
-                        v.setScreenXY(screenX, screenY);
+
                     }
                 }
-            }
-            if (dx==1) {
+            } else if (d == "Down") {
                 direction = "down";
                 screenY += velocidad;
-                v.setScreenXY(screenX, screenY);
-                if (screenY > (x + 1) * 48 - 45) {
-                    System.out.println("Cambie de casilla abajo");
+                if (screenY > (x + 1) * 48 - 55) {
                     canMove = move(1,0);
+                    System.out.println("Cambie de casilla abajo");
                     if (!canMove) {
                         screenY -= velocidad;
-                        v.setScreenXY(screenX, screenY);
                     }
                 }
-            }
-            if (dy == -1) {
+            } else if (d  == "Left") {
                 direction = "left";
                 screenX -= velocidad;
-                v.setXY(screenX, screenY);
                 if (screenX < y * 48 - 10) {
-                    System.out.println("Cambie de casilla a la izquierda");
                     canMove = move(0,-1);
+                    System.out.println(canMove);
                     if (!canMove) {
                         screenX += velocidad;
-                        v.setScreenXY(screenX, screenY);
                     }
                 }
-            }
-            if (dy == 1) {
+            } else if (d == "Right") {
                 direction = "right";
                 screenX += velocidad;
-                v.setScreenXY(screenX, screenY);
                 if (screenX > (x + 1) * 48 - 40) {
-                    System.out.println("Cambie de casilla a la derecha");
                     canMove = move(0,1);
+                    System.out.println("Cambie de casilla a la derecha");
                     if (!canMove) {
                         screenX -= velocidad;
-                        v.setScreenXY(screenX, screenY);
                     }
                 }
             }
+        v.setScreenXY(screenX, screenY);
     }
 
     public void draw(Graphics2D pincel){

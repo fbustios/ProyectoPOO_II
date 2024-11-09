@@ -50,9 +50,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         double nextDrawTime = System.nanoTime() + drawInterval;
 
         while(gameThread != null){
-
             update();
-
             repaint();
 
             try{

@@ -3,10 +3,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Coordenada{
     private Hero hero = null;
     private Bomb bomb = null;
+    private Puerta puerta = null;
     private MuroMetal muroMetal;
     private MuroLadrillos muroLadrillo;
     private boolean hayFuego;
@@ -22,7 +25,7 @@ public class Coordenada{
     private boolean cuponHombreLlamas = false;
     private String tipoMuro = "Cesped";
     private Villano villano;
-    private BufferedImage Cesped,CespedFloreado;
+    private BufferedImage Cesped,CespedFloreado, Fuego, Bomba, Door;
     int length = 48;
     int area = 48*48;  //area de cada coordenada 48 de largo y 48 ancho
 
@@ -34,11 +37,16 @@ public class Coordenada{
         this.x = x;
         this.y = y;
         this.villano = null;
+        getCoordenadaImage();
     }
 
     public void getCoordenadaImage(){
         try{
             Cesped = ImageIO.read(getClass().getResourceAsStream("\\Tiles\\Cesped1.png"));
+            CespedFloreado = ImageIO.read(getClass().getResourceAsStream("\\Tiles\\CespedFloreado.png"));
+            Fuego = ImageIO.read(getClass().getResourceAsStream("\\Things\\Bomba14.png"));
+            Bomba = ImageIO.read(getClass().getResourceAsStream("\\Things\\BombaC.jpg"));
+            Door = ImageIO.read(getClass().getResourceAsStream("\\Things\\Puerta.png"));
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -50,11 +58,17 @@ public class Coordenada{
         if(muroLadrillo!=null) {
             image = muroLadrillo.getImagen();
             pincel.drawImage(image, y * 48, x * 48, 48, 48, null);
-        }else if(muroMetal != null){
-            pincel.drawImage(muroMetal.imagen, y*48, x*48,48, 48, null);
-        } else if(hayFuego){
+        }else if(muroMetal != null) {
+            pincel.drawImage(muroMetal.imagen, y * 48, x * 48, 48, 48, null);
+        }else if(bomb!=null){
+            image = Bomba;
             pincel.drawImage(image, y*48, x*48, 48, 48, null);
-            image = null;
+        } else if(hayFuego) {
+            image = Fuego;
+            pincel.drawImage(image, y * 48, x * 48, 48, 48, null);
+        }else if(puerta!=null){
+            image = Door;
+            pincel.drawImage(image, y*48, x*48, 48, 48, null);
         } else if(!hayMuro && hayCupon){
             pincel.drawImage(image, y*48, x*48, 48, 48, null);
             image = null;
@@ -63,6 +77,7 @@ public class Coordenada{
             pincel.drawImage(image, y*48, x*48, 48, 48, null);
         }
     }
+
 
     public boolean getHayMuro(){
         return this.hayMuro;
@@ -82,12 +97,27 @@ public class Coordenada{
         hayMuro = true;
     }
 
+    public void setPuerta(Puerta puerta){
+        this.puerta = puerta;
+    }
+
     public boolean getHayFuego(){
         return this.hayFuego;
     }
 
-    public void setHayFuego(boolean t){
-        this.hayFuego = t;
+    public void setHayFuego(int milisegundos){
+        this.hayFuego = true;
+        this.muroLadrillo = null;
+        this.hayMuro = false;
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask(){
+            @Override
+            public void run(){
+                hayFuego = false;
+                timer.cancel();
+            }
+        };
+        timer.schedule(task,milisegundos);
     }
 
     public void setBomb(Bomb bomb){
@@ -155,5 +185,7 @@ public class Coordenada{
     public void setPregunta(boolean pregunta ){
         cuponPregunta = pregunta;
     }
-
+    public MuroMetal getMuroMetal(){
+        return this.muroMetal;
+    }
 }

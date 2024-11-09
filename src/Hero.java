@@ -1,13 +1,19 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+import java.util.Timer;
+import java.util.TimerTask;
 import static java.lang.Math.ceil;
 import static java.lang.Math.floor;
-
+import java.util.*;
 
 public class Hero implements Subject{
     private List<Observer> observersList = new ArrayList<>();
@@ -16,19 +22,17 @@ public class Hero implements Subject{
     private Tablero tablero;
     private int[] posicion = new int[2];
     private static Hero instancia = null;
-    private Detonador detonador = null;
+    private Detonador detonador = new Detonador();
     private boolean muroRayado = false;
     private boolean bombaRayado = false;
     private boolean invulFuego = false;
     private boolean patin = false;
-    private int cantBombas = 1;
     private GamePanel panel;
     private KeyHandler kh;
     private int X;
     private int Y;
-    private int aHorizontal;
-    private int aVertical;
     private boolean canMove = true;
+    private BombPool bombas = BombPool.getBombPool();
 
     //Variables de impresion
     private BufferedImage atras0, atras1, atras2, frente0, frente1, frente2, izquierda0, izquierda1, izquierda2, derecha0, derecha1, derecha2;
@@ -49,8 +53,6 @@ public class Hero implements Subject{
         Y = 0;
         this.kh = kh;
         getPlayerImage();
-        aHorizontal = 0;
-        aVertical = 0;
     }
 
     public static Hero getInstancia(Tablero tablero, GamePanel pane,KeyHandler kh){
@@ -89,7 +91,40 @@ public class Hero implements Subject{
        return puedeMoverse;
     }
 
+    public void colocarBombaSinDetonador(){
+        Bomb bomba = bombas.obtenerBomba();
+        System.out.println("Puse una bomba");
+        int x = posicion[0]; int y = posicion[1];
+        if(bomba!=null){
+            tablero.getCoordenada(x, y).setBomb(bomba);
+            bomba.setXY(x,y);
+            Timer timer2 = new Timer();
+            TimerTask task = new TimerTask(){
+                @Override
+                public void run() {
+                    bomba.explode(tablero);
+                    bombas.devolverBomba(bomba);
+                    tablero.getCoordenada(x, y).setBomb(null);
+                    System.out.println("Exploté");
+                    timer2.cancel();
+                }
+            };
+            timer2.schedule(task,2000);
+    }}
 
+    public void colocarBombaConDetonador(){
+        Bomb bomba = bombas.obtenerBomba();
+        int x = posicion[0]; int y = posicion[1];
+        if(bomba!=null){
+            tablero.getCoordenada(x, y).setBomb(bomba);
+            bomba.setXY(x,y);
+            detonador.addBomb(bomba);
+        }
+    }
+    public void detonarBomba(){
+        detonador.explodeBomb(tablero);
+
+    }
 
     public boolean move(int dx, int dy) {
         Coordenada n = tablero.getCoordenada(posicion[0] + dx, posicion[1] + dy);
@@ -113,6 +148,20 @@ public class Hero implements Subject{
 
 
     public void update(){
+        if(kh.shiftPressed) {
+            if(detonador == null){
+                colocarBombaSinDetonador();
+            } else {
+                colocarBombaConDetonador();
+            }
+            kh.shiftPressed = false;
+        }
+        if(kh.spacePressed){
+            if(detonador != null){
+                detonarBomba();
+            }
+            kh.spacePressed = false;
+        }
         if(kh.upPressed | kh.downPressed | kh.leftPressed | kh.rightPressed){
         if(kh.upPressed){
             direction = "up";
@@ -121,7 +170,6 @@ public class Hero implements Subject{
                 System.out.println("Cambie de casilla arriba");
                 canMove = move(-1,0);
                 if(!canMove){
-                    Y+=velocidad;
                     Y+=velocidad;
                 }
             }
@@ -273,7 +321,7 @@ public class Hero implements Subject{
         }
         if(a.getCuponSol()){
             a.setCuponSol(false);
-            this.cantBombas+=2;
+            bombas.actualizarRango(2);
             //set de las bombas del detonador;
         }
     }

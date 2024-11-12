@@ -14,6 +14,7 @@ public class Tablero {
                 tablero[i][j] = new Coordenada(i,j);
             }
         }
+        panel.playMusic(2);
         this.panel = panel;
         nivelActual = 0;
     }
@@ -34,11 +35,12 @@ public class Tablero {
         for(int i = 0; i < cant; i+=2){
             int idx = rand.nextInt(2, tablero.length);
             int idx2 = rand.nextInt(2, tablero[0].length);
-            if(ponerPuerta){
-                tablero[idx][idx2].setPuerta(new Puerta());
-                ponerPuerta = false;
-            }
+
             if(!tablero[idx][idx2].getHayMuro()){
+                if(ponerPuerta){
+                    tablero[idx][idx2].setPuerta(new Puerta());
+                    ponerPuerta = false;
+                }
                 tablero[idx][idx2].setMuroLadrillo();
             }
         }
@@ -50,9 +52,10 @@ public class Tablero {
         tablero[0][0].setHero(hero);
         this.nivelActual = nivel;
         hero.attach(new Globo(6,6,this,1,1,100,true));
-        hero.attach(new Globo(4,5,this,1,2/3,100,true));
-        hero.attach(new Globo(10,11,this,1,2/3,100,true));
-        hero.attach(new Globo(8,4,this,1,2/3,100,true));
+        hero.attach(new MonG(10,10,this,1,1,500,true));
+        hero.attach(new Globo(4,5,this,1,1,100,true));
+        hero.attach(new Globo(10,11,this,1,1,100,true));
+        hero.attach(new Globo(8,4,this,1,1,100,true));
     }
 
     public Coordenada getCoordenada(int x, int y){

@@ -102,6 +102,7 @@ public class Hero implements Subject{
             TimerTask task = new TimerTask(){
                 @Override
                 public void run() {
+                    panel.playSoundEffect(3);
                     bomba.explode(tablero);
                     bombas.devolverBomba(bomba);
                     tablero.getCoordenada(x, y).setBomb(null);
@@ -119,6 +120,7 @@ public class Hero implements Subject{
             tablero.getCoordenada(x, y).setBomb(bomba);
             bomba.setXY(x,y);
             detonador.addBomb(bomba);
+            panel.playSoundEffect(3);
         }
     }
     public void detonarBomba(){
@@ -135,11 +137,8 @@ public class Hero implements Subject{
                 a.setHero(null);
                 posicion[0] += dx;
                 posicion[1] += dy;
-                System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
                 return true;
             } else {
-                System.out.println("Estoy en: " + posicion[0] + " " + posicion[1]);
-                System.out.println("No me pude mover");
                 return false;
             }
         }
@@ -167,7 +166,6 @@ public class Hero implements Subject{
             direction = "up";
             Y-=velocidad;
             if(Y < posicion[0]*48 - 10){
-                System.out.println("Cambie de casilla arriba");
                 canMove = move(-1,0);
                 if(!canMove){
                     Y+=velocidad;
@@ -178,7 +176,6 @@ public class Hero implements Subject{
             direction = "down";
             Y+=velocidad;
             if(Y > (posicion[0]+1)*48 - 45){
-                System.out.println("Cambie de casilla abajo");
                 canMove =  move(1,  0);
                 if(!canMove) {
                     Y -= velocidad;
@@ -189,7 +186,6 @@ public class Hero implements Subject{
             direction = "left";
             X-=velocidad;
             if(X < posicion[1]*48 - 10){
-                System.out.println("Cambie de casilla a la izquierda");
                 canMove = move(0,-1);
                 if(!canMove) {
                     X += velocidad;
@@ -200,7 +196,6 @@ public class Hero implements Subject{
             direction = "right";
             X+=velocidad;
             if(X > (posicion[1]+1)*48 - 40){
-                System.out.println("Cambie de casilla a la derecha");
                 canMove = move(0,1);
                 if(!canMove){
                     X-=velocidad;
@@ -270,7 +265,7 @@ public class Hero implements Subject{
                 if(spriteNumber==3){image = derecha2;}
                 break;
         }
-
+        //notifyObservers(posicion[0],posicion[1],pincel);
         pincel.drawImage(image, X, Y, tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
 

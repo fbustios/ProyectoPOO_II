@@ -188,4 +188,14 @@ public class Coordenada{
     public MuroMetal getMuroMetal(){
         return this.muroMetal;
     }
+
+    public boolean hayHero(){
+        return this.hero != null;
+    }
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
+    }
 }

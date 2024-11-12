@@ -10,7 +10,7 @@ public class RandomSystem implements VillainMovement {
     private String d = "Down";
     private Villano v;
     private Tablero tablero;
-    private int cont = 0;
+    private int cont = 48;
 
     RandomSystem(Villano villano, Tablero tablero){
         this.v = villano;
@@ -24,9 +24,7 @@ public class RandomSystem implements VillainMovement {
             if (!n.getHayMuro()) {
                 n.setVillano(v);
                 a.setVillano(null);
-                System.out.println("dx: " + dx);
-                System.out.println("dx: " + dy);
-                v.setXY(v.getX()+dx, v.getX()+dy);
+                v.setXY(v.getX()+dx, v.getY()+dy);
                 return true;
             } else {
                 return false;
@@ -43,8 +41,16 @@ public class RandomSystem implements VillainMovement {
         int screenX = v.getScreenX();
         int screenY = v.getScreenY();
 
-
         double velocidad = v.getVelocidad();
+
+        if(cont == 48){
+            int i = rand.nextInt(0,4);
+            if(i == 0){d = "Up";}
+            else if(i == 1){d = "Down";}
+            else if(i == 2){d = "Left";}
+            else if(i == 3){d = "Right";}
+            cont = 0;
+        }
             if (d == "Up") {
                 direction = "up";
                 screenY -= velocidad;
@@ -53,8 +59,6 @@ public class RandomSystem implements VillainMovement {
                     canMove = move(-1,0);
                     if (!canMove) {
                         screenY += velocidad;
-                        screenY += velocidad;
-
                     }
                 }
             } else if (d == "Down") {
@@ -62,7 +66,7 @@ public class RandomSystem implements VillainMovement {
                 screenY += velocidad;
                 if (screenY > (x + 1) * 48 - 55) {
                     canMove = move(1,0);
-                    System.out.println("Cambie de casilla abajo");
+                    //System.out.println("Cambie de casilla abajo");
                     if (!canMove) {
                         screenY -= velocidad;
                     }
@@ -72,7 +76,7 @@ public class RandomSystem implements VillainMovement {
                 screenX -= velocidad;
                 if (screenX < y * 48 - 10) {
                     canMove = move(0,-1);
-                    System.out.println(canMove);
+                    //System.out.println(canMove);
                     if (!canMove) {
                         screenX += velocidad;
                     }
@@ -80,21 +84,22 @@ public class RandomSystem implements VillainMovement {
             } else if (d == "Right") {
                 direction = "right";
                 screenX += velocidad;
-                if (screenX > (x + 1) * 48 - 40) {
+                if (screenX > (y + 1) * 48 - 40) {
                     canMove = move(0,1);
-                    System.out.println("Cambie de casilla a la derecha");
+                    //System.out.println("Cambie de casilla a la derecha");
                     if (!canMove) {
                         screenX -= velocidad;
                     }
                 }
             }
         v.setScreenXY(screenX, screenY);
+        cont++;
     }
 
     public void draw(Graphics2D pincel){
-        System.out.println(v.getX() + " " + v.getY());
+        //System.out.println(v.getX() + " " + v.getY());
         BufferedImage image = v.getImage();
         pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
 
-};
+}

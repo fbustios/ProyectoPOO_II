@@ -9,17 +9,19 @@ public class MinSystem implements VillainMovement {
     private String d = "Down";
     private Villano v;
     private Tablero tablero;
-    private int cont = 150;
+    private int cont = 30;
     private boolean cambieCasilla = false;
     private int screenX;
     private int screenY;
     private List<String> movs;
+    private boolean atm;
 
      MinSystem(Villano villano, Tablero tablero){
         this.v = villano;
         this.tablero = tablero;
         this.screenX = v.getScreenY();
         this.screenY = v.getScreenX();
+        this.atm = v.getAtm();
         this.movs = bfs();
     }
 
@@ -27,11 +29,9 @@ public class MinSystem implements VillainMovement {
         Coordenada n = tablero.getCoordenada(v.getX() + dx,  v.getY() + dy);
         Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
         if (n != null) {
-            if (!n.getHayMuro()) {
+            if (!n.getHayMuro() || (atm&&n.getMuroMetal()==null)) {
                 n.setVillano(v);
                 a.setVillano(null);
-                System.out.println("dx: " + dx);
-                System.out.println("dx: " + dy);
                 v.setXY(v.getX()+dx, v.getY()+dy);
                 return true;
             } else {
@@ -47,8 +47,12 @@ public class MinSystem implements VillainMovement {
             cont=30;
         }
          if(movs!=null) {
+             for(String i: movs) {
+                 System.out.println(i);
+             }
+             System.out.println("Termino");
              while (!movs.isEmpty()) {
-                 String d = movs.getFirst();
+                 String d = movs.get(0);
                  movs.remove(0);
                  mover(d);
              }
@@ -115,34 +119,34 @@ public class MinSystem implements VillainMovement {
         q.add(p);
         while(!q.isEmpty()){
             Pair<Coordenada, List<String>> act = q.poll();
-            if(act.getFirst().hayHero()==true){
+            if(act.getFirst().hayHero()){
                 return act.getSecond();
             }
             int x = act.getFirst().getX();
             int y = act.getFirst().getY();
             Coordenada up = tablero.getCoordenada(x-1,y);
-            if(up!=null && !up.getHayMuro() && !visitados.contains(up)){
+            if(up!=null && (!up.getHayMuro() || (v.getAtm()&& up.getMuroMetal()==null)) && !visitados.contains(up)){
                 List<String> n = new ArrayList<>(act.getSecond());
                 n.add("Up");
                 visitados.add(up);
                 q.add(new Pair<>(up,n));
             }
             Coordenada down = tablero.getCoordenada(x+1,y);
-            if(down != null && !down.getHayMuro() && !visitados.contains(down)){
+            if(down != null && (!down.getHayMuro() || (v.getAtm()&& down.getMuroMetal()==null)) && !visitados.contains(down)){
                 List<String> n = new ArrayList<>(act.getSecond());
                 n.add("Down");
                 visitados.add(down);
                 q.add(new Pair<>(down,n));
             }
             Coordenada left = tablero.getCoordenada(x,y-1);
-            if(left!= null && !left.getHayMuro() && !visitados.contains(left)){
+            if(left!= null && (!left.getHayMuro() || (v.getAtm()&& left.getMuroMetal()==null)) && !visitados.contains(left)){
                 List<String> n = new ArrayList<>(act.getSecond());
                 n.add("Left");
                 visitados.add(left);
                 q.add(new Pair<>(left,n));
             }
             Coordenada right = tablero.getCoordenada(x,y+1);
-            if(right!= null && !right.getHayMuro() && !visitados.contains(right)){
+            if(right!= null &&(!right.getHayMuro() || (v.getAtm()&& right.getMuroMetal()==null)) && !visitados.contains(right)){
                 List<String> n = new ArrayList<>(act.getSecond());
                 n.add("Right");
                 visitados.add(right);
@@ -153,12 +157,11 @@ public class MinSystem implements VillainMovement {
     }
 
     public void draw(Graphics2D pincel){
-        System.out.println(v.getX() + " " + v.getY());
-        System.out.println(screenX + " " + screenY);
+        //System.out.println(v.getX() + " " + v.getY());
+        //System.out.println(screenX + " " + screenY);
         BufferedImage image = v.getImage();
         cont--;
-        pincel.drawImage(image, screenX, screenY, tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+        pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
-
 
 }

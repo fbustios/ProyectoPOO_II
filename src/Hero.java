@@ -98,11 +98,12 @@ public class Hero implements Subject{
         if(bomba!=null){
             tablero.getCoordenada(x, y).setBomb(bomba);
             bomba.setXY(x,y);
+            panel.playSoundEffect(3);
             Timer timer2 = new Timer();
             TimerTask task = new TimerTask(){
                 @Override
                 public void run() {
-                    panel.playSoundEffect(3);
+                    panel.playSoundEffect(1);
                     bomba.explode(tablero);
                     bombas.devolverBomba(bomba);
                     tablero.getCoordenada(x, y).setBomb(null);
@@ -124,7 +125,7 @@ public class Hero implements Subject{
         }
     }
     public void detonarBomba(){
-        detonador.explodeBomb(tablero);
+        detonador.explodeBomb(tablero, panel);
 
     }
 

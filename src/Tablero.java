@@ -30,18 +30,19 @@ public class Tablero {
 
     public void setMurosLadrillo(){
         Random rand = new Random();
-        int cant = rand.nextInt((tablero.length * tablero[0].length));
+        int cant = rand.nextInt(2,(tablero.length * tablero[0].length))/3;
         boolean ponerPuerta = true;
-        for(int i = 0; i < cant; i+=2){
+        int colocados = 0;
+        while(colocados<=cant){
             int idx = rand.nextInt(2, tablero.length);
             int idx2 = rand.nextInt(2, tablero[0].length);
-
             if(!tablero[idx][idx2].getHayMuro()){
                 if(ponerPuerta){
                     tablero[idx][idx2].setPuerta(new Puerta());
                     ponerPuerta = false;
                 }
                 tablero[idx][idx2].setMuroLadrillo();
+                colocados ++;
             }
         }
     }
@@ -51,11 +52,10 @@ public class Tablero {
         setMurosLadrillo();
         tablero[0][0].setHero(hero);
         this.nivelActual = nivel;
-        hero.attach(new Globo(6,6,this,1,1,100,true));
-        hero.attach(new MonG(10,10,this,1,1,500,true));
-        hero.attach(new Globo(4,5,this,1,1,100,true));
-        hero.attach(new Globo(10,11,this,1,1,100,true));
-        hero.attach(new Globo(8,4,this,1,1,100,true));
+        //hero.attach(new Globo(6,6,this,1,1,100,false));
+        hero.attach(new MonG(10,10,this,1,1,500,false));
+        //hero.attach(new Globo(4,5,this,1,1,100,false));
+        //hero.attach(new Mon(12,12,this,1,1,200,false));
     }
 
     public Coordenada getCoordenada(int x, int y){

@@ -12,12 +12,13 @@ public class Detonador {
         bombas.add(bomb);
     }
 
-    public void explodeBomb(Tablero tab){
+    public void explodeBomb(Tablero tab, GamePanel panel){
         Bomb expBomb = bombas.poll();
         if(expBomb!=null) {
             int x = expBomb.getX();
             int y = expBomb.getY();
             expBomb.explode(tab);
+            panel.playSoundEffect(1);
             tab.getCoordenada(x,y).setBomb(null);
             piscina.devolverBomba(expBomb);
         }

@@ -21,7 +21,7 @@ public class RandomSystem implements VillainMovement {
         Coordenada n = tablero.getCoordenada(v.getX() + dx,  v.getY() + dy);
         Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
         if (n != null) {
-            if (!n.getHayMuro()) {
+            if (!n.getHayMuro() || (v.getAtm()&& n.getMuroMetal()==null)) {
                 n.setVillano(v);
                 a.setVillano(null);
                 v.setXY(v.getX()+dx, v.getY()+dy);
@@ -97,7 +97,7 @@ public class RandomSystem implements VillainMovement {
     }
 
     public void draw(Graphics2D pincel){
-        //System.out.println(v.getX() + " " + v.getY());
+        System.out.println(v.getX() + " " + v.getY());
         BufferedImage image = v.getImage();
         pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }

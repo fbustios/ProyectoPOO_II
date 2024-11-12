@@ -86,8 +86,11 @@ public class Coordenada{
     public void setMuroMetal(){
         this.muroMetal = new MuroMetal();
         this.hayMuro = true;
-
     }
+    public MuroMetal getMuroMetal(){
+        return this.muroMetal;
+    }
+
     public void setHero(Hero hero){
         this.hero = hero;
     }
@@ -95,6 +98,9 @@ public class Coordenada{
     public void setMuroLadrillo(){
         this.muroLadrillo = new MuroLadrillos();
         hayMuro = true;
+    }
+    public MuroLadrillos getMuroLadrillo(){
+        return this.muroLadrillo;
     }
 
     public void setPuerta(Puerta puerta){
@@ -185,9 +191,6 @@ public class Coordenada{
     public void setPregunta(boolean pregunta ){
         cuponPregunta = pregunta;
     }
-    public MuroMetal getMuroMetal(){
-        return this.muroMetal;
-    }
 
     public boolean hayHero(){
         return this.hero != null;
@@ -198,4 +201,5 @@ public class Coordenada{
     public int getY(){
         return this.y;
     }
+
 }

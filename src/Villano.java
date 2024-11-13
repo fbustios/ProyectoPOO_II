@@ -24,8 +24,8 @@ abstract public class Villano implements Observer {
         this.puntaje = puntaje;
         vivo = true;
         this.tab = tab;
-        this.screenX = (y*48)+1;
-        this.screenY = (x*48)+1;
+        this.screenX = (y*48);
+        this.screenY = (x*48);
 
     }
 

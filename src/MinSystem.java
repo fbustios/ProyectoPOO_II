@@ -6,11 +6,11 @@ import java.util.List;
 
 public class MinSystem implements VillainMovement {
     private boolean canMove = true;
-    private String d = "Down";
+    private String d = "N";
     private Villano v;
     private Tablero tablero;
-    private int cont = 30;
-    private boolean cambieCasilla = false;
+    private int cont = 0;
+    private boolean cambieCasilla = true;
     private int screenX;
     private int screenY;
     private List<String> movs;
@@ -22,7 +22,7 @@ public class MinSystem implements VillainMovement {
         this.screenX = v.getScreenY();
         this.screenY = v.getScreenX();
         this.atm = v.getAtm();
-        this.movs = bfs();
+        this.movs = null;
     }
 
     public boolean move(int dx, int dy) {
@@ -42,21 +42,20 @@ public class MinSystem implements VillainMovement {
     }
 
     public void updateGraphics(){
-        if(cont==0){
-            movs = bfs();
-            cont=30;
-        }
-         if(movs!=null) {
-             for(String i: movs) {
-                 System.out.println(i);
-             }
-             System.out.println("Termino");
-             while (!movs.isEmpty()) {
-                 String d = movs.get(0);
-                 movs.remove(0);
-                 mover(d);
-             }
+             movs = bfs();
+
+
+         if(movs!=null){
+
+             if(cambieCasilla) {
+                 System.out.println("me meti 2");
+                 if(movs.size()>0){
+                 d = movs.get(0);
+                 movs.remove(0);}
+                 cambieCasilla = false;
+             } else mover(d);
          }
+         cont--;
     }
 
     public void mover(String d) {
@@ -67,7 +66,7 @@ public class MinSystem implements VillainMovement {
         if (Objects.equals(d, "Up")) {
             screenY -= velocidad;
 
-            if (screenY < x * 48 - 10) {
+            if (screenY < x * 48 - 48) {
                 canMove = move(-1,0);
                 if (!canMove) {
                     screenY += velocidad;
@@ -78,7 +77,7 @@ public class MinSystem implements VillainMovement {
             }
         } else if (Objects.equals(d, "Down")) {
             screenY += velocidad;
-            if (screenY > (x + 1) * 48 - 55) {
+            if (screenY > (x+1) * 48) {
                 canMove = move(1,0);
                 System.out.println("Cambie de casilla abajo");
                 if (!canMove) {
@@ -89,7 +88,7 @@ public class MinSystem implements VillainMovement {
             }
         } else if (Objects.equals(d, "Left")) {
             screenX -= velocidad;
-            if (screenX < y * 48 - 10) {
+            if (screenX < y * 48 - 48) {
                 canMove = move(0,-1);
                 System.out.println(canMove);
                 if (!canMove) {
@@ -100,7 +99,7 @@ public class MinSystem implements VillainMovement {
             }
         } else if (Objects.equals(d, "Right")) {
             screenX += velocidad;
-            if (screenX > (y + 1) * 48 - 40) {
+            if (screenX > (y+1) * 48) {
                 canMove = move(0,1);
                 System.out.println("Cambie de casilla a la derecha");
                 if (!canMove) {
@@ -157,8 +156,8 @@ public class MinSystem implements VillainMovement {
     }
 
     public void draw(Graphics2D pincel){
-        //System.out.println(v.getX() + " " + v.getY());
-        //System.out.println(screenX + " " + screenY);
+        System.out.println(v.getX() + " " + v.getY());
+        System.out.println(screenX + " " + screenY);
         BufferedImage image = v.getImage();
         cont--;
         pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);

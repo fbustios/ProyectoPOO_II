@@ -3,29 +3,26 @@ import java.awt.image.BufferedImage;
 import java.util.Observable;
 
 abstract public class Villano implements Observer {
+    protected VillainMovement ia;
     protected int nivelInicial;
     protected double velocidad;
     protected boolean atm;
     protected int puntaje;
     protected boolean vivo;
-    protected int x;
-    protected int y;
-    protected int screenX;
-    protected int screenY;
+    protected int x = 0;
+    protected int y = 0;
+    protected int screenX = 0;
+    protected int screenY = 0;
     protected Tablero tab;
-    protected BufferedImage image;
+    protected BufferedImage image, image0, image1;
 
-    public Villano(int x,int y, Tablero tab, int nivelInicial, double velocidad, boolean atm, int puntaje) {
-        this.x = x;
-        this.y = y;
+    public Villano(Tablero tab, int nivelInicial, double velocidad, boolean atm, int puntaje) {
         this.nivelInicial = nivelInicial;
         this.velocidad = velocidad;
         this.atm = atm;
         this.puntaje = puntaje;
         vivo = true;
         this.tab = tab;
-        this.screenX = (y*48);
-        this.screenY = (x*48);
 
     }
 
@@ -45,6 +42,14 @@ abstract public class Villano implements Observer {
 
     public int getY(){
         return this.y;
+    }
+
+    public BufferedImage getImage0(){
+        return  image0;
+    }
+
+    public BufferedImage getImage1(){
+        return  image1;
     }
 
     public void setVivo(boolean vivo) {
@@ -68,8 +73,13 @@ abstract public class Villano implements Observer {
     public void setScreenXY(int X,int Y){
         this.screenX = X;
         this.screenY = Y;
+        this.ia.setScreenXY(X,Y);
     }
     public boolean getAtm(){
         return this.atm;
+    }
+
+    public int getNivelInicial(){
+        return this.nivelInicial;
     }
 }

@@ -11,13 +11,11 @@ import java.awt.event.ActionEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import static java.lang.Math.ceil;
-import static java.lang.Math.floor;
-import java.util.*;
 
 public class Hero implements Subject{
     private List<Observer> observersList = new ArrayList<>();
     private int vidas;
+    private boolean alive = true;
     private double velocidad;
     private Tablero tablero;
     private int[] posicion = new int[2];
@@ -43,7 +41,7 @@ public class Hero implements Subject{
     //detonador, moverse y los cupones.
 
     private Hero(Tablero tab, GamePanel pane, KeyHandler kh){
-        vidas = 2;
+        vidas = 3;
         posicion[0] = 0;
         posicion[1] = 0;
         tablero = tab;
@@ -65,15 +63,19 @@ public class Hero implements Subject{
 
     public boolean restarVida(){
         Coordenada coordenada = tablero.getCoordenada(posicion[0], posicion[1]);
-        if(((!invulFuego) && (coordenada.getHayFuego()))|(!(coordenada.getVillano()==null))){
+        if((!invulFuego && coordenada.getHayFuego())||coordenada.getVillano()!=null){
             vidas -= 1;
             detonador = null;
             bombaRayado = false;
             muroRayado = false;
             invulFuego = false;
-            return true;
+            posicion[0] = 0;
+            posicion[1] = 0;
+            X = 0;
+            Y = 0;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public boolean verificar(int x, int y){
@@ -217,6 +219,7 @@ public class Hero implements Subject{
             }
             spriteCounter = 0;}
         }
+        checkState();
     }
 
     public void getPlayerImage(){
@@ -242,6 +245,8 @@ public class Hero implements Subject{
     }
 
     public void draw(Graphics2D pincel){
+
+
         BufferedImage image = null;
         notifyObservers(posicion[0],posicion[1],pincel);
         switch(direction){
@@ -268,6 +273,7 @@ public class Hero implements Subject{
         }
         //notifyObservers(posicion[0],posicion[1],pincel);
         pincel.drawImage(image, X, Y, tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+        //System.out.println("LLegúe al draw del heroe");
     }
 
     public int getVidas(){
@@ -291,9 +297,6 @@ public class Hero implements Subject{
     }
     public void checkState(){
         Coordenada a = tablero.getCoordenada(posicion[0],posicion[1]);
-        if(restarVida()){
-            return;
-        }
         if(a.getCuponPatin()){
             this.patin = true;
             this.velocidad += 1.5;
@@ -320,6 +323,10 @@ public class Hero implements Subject{
             bombas.actualizarRango(2);
             //set de las bombas del detonador;
         }
+        alive = restarVida();
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
 }

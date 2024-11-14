@@ -2,8 +2,8 @@ import java.awt.*;
 
 public class Espon extends Villano{
 
-    public Espon(int x,int y, Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
-        super(x,y,tab,nivelInicial,velocidad,atm,puntaje);
+    public Espon(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
+        super(tab,nivelInicial,velocidad,atm,puntaje);
     }
 
     @Override

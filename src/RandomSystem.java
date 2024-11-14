@@ -11,6 +11,10 @@ public class RandomSystem implements VillainMovement {
     private Villano v;
     private Tablero tablero;
     private int cont = 48;
+    private int spriteCounter = 0;
+    private int spriteNumber = 1;
+    private int screenX = 0;
+    private int screenY = 0;
 
     RandomSystem(Villano villano, Tablero tablero){
         this.v = villano;
@@ -21,7 +25,7 @@ public class RandomSystem implements VillainMovement {
         Coordenada n = tablero.getCoordenada(v.getX() + dx,  v.getY() + dy);
         Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
         if (n != null) {
-            if (!n.getHayMuro() || (v.getAtm()&& n.getMuroMetal()==null)) {
+            if (!n.getHayMuro() || (v.getAtm()&& n.getMuroMetal()==null) && n.getBomb() == null) {
                 n.setVillano(v);
                 a.setVillano(null);
                 v.setXY(v.getX()+dx, v.getY()+dy);
@@ -38,8 +42,6 @@ public class RandomSystem implements VillainMovement {
         Random rand = new Random();
         int x = v.getX();
         int y = v.getY();
-        int screenX = v.getScreenX();
-        int screenY = v.getScreenY();
 
         double velocidad = v.getVelocidad();
 
@@ -94,12 +96,34 @@ public class RandomSystem implements VillainMovement {
             }
         v.setScreenXY(screenX, screenY);
         cont++;
+
+        spriteCounter ++;
+        if(spriteCounter > 48){
+            if(spriteNumber == 1){
+                spriteNumber = 2;
+            }
+            else if(spriteNumber == 2){
+                spriteNumber = 1;
+            }
+
+            spriteCounter = 0;}
     }
 
     public void draw(Graphics2D pincel){
         System.out.println(v.getX() + " " + v.getY());
-        BufferedImage image = v.getImage();
+        System.out.println(v.getScreenX() + " "+ v.getScreenY());
+
+        BufferedImage image = null;
+
+        if(spriteNumber==1){image = v.getImage0();}
+        if(spriteNumber==2){image = v.getImage1();}
+
         pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+    }
+
+    public void setScreenXY(int x, int y){
+        this.screenX = x;
+        this.screenY = y;
     }
 
 }

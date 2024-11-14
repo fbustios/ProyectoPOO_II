@@ -13,19 +13,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     Mensajes mensajes = new Mensajes(this);
     Sonido sonido = new Sonido();
 
-    Tablero tab = new Tablero(this);
-    Hero hero = Hero.getInstancia(tab,this,KH);
+    LevelManager lm = new LevelManager(this);
 
     int gameState = 1;
 
     int FPS = 60;
     Thread gameThread;
 
-    DecimalFormat df = new DecimalFormat("0.0");
-    double tiempo = 200;
-
     public GamePanel() {
-        this.setPreferredSize(new Dimension(15*tab.getCoordenada(1,1).length, 13*tab.getCoordenada(1,1).length));
+        this.setPreferredSize(new Dimension(15*lm.getTablero().getCoordenada(1,1).length, 13*lm.getTablero().getCoordenada(1,1).length));
         this.setBackground(Color.YELLOW);
         this.setDoubleBuffered(true);
         this.addKeyListener(KH);
@@ -45,7 +41,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void startGameThread(){
 
-        tab.startLevel(hero,0);
+        lm.setNivel(1);
         //esto hay que meterlo en start level
         gameThread = new Thread(this);
         gameThread.start();
@@ -81,21 +77,22 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public void update(){
 
         if (gameState == 1) {
-            hero.update(); // ya llama a los bichos
-            tiempo -= (double) 1 / 60;
+            lm.update(); // ya llama a los bichos
+
+            double tiempo = lm.getTiempo() - (double) 1 / 60;
+            lm.setTiempo(tiempo);
+
         }else if (gameState == 2) {
             mensajes.mostrarMensaje("Pausa");
         }
 
-        // pienso que cada coordenada debería manejar un x,y para que se pinte sola también, util para pintar muros cupones...
         //checkear aca estado del juego para ver si hay que empezar el loop con un nivel diferente o ya se perdió.
     }
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D pincel = (Graphics2D) g;
         //imprimir las cosas en la pantalla
-        tab.draw(pincel);
-        hero.draw(pincel);
+        lm.draw(pincel);
         mensajes.draw(pincel);
     }
 

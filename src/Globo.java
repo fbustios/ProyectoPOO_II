@@ -4,13 +4,13 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Globo extends Villano{
-    VillainMovement rand;
-    public Globo(int x,int y, Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
-        super(x,y,tab,nivelInicial,velocidad,atm,puntaje);
-        this.rand = new RandomSystem(this,tab);
+    public Globo(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
+        super(tab,nivelInicial,velocidad,atm,puntaje);
+        this.ia = new RandomSystem(this,tab);
 
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("\\Villains\\globo0.png"));
+            image0 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\globo0.png"));
+            image1 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\globo1.png"));
         } catch (IOException e) {
             System.out.println("Error al leer el imagen");
             e.printStackTrace();
@@ -24,8 +24,8 @@ public class Globo extends Villano{
 
     @Override
     public void moverVillano(int x, int y, Graphics2D pincel) {
-        rand.updateGraphics();
-        rand.draw(pincel);
+        ia.updateGraphics();
+        ia.draw(pincel);
     }
 
 }

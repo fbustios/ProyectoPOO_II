@@ -7,4 +7,8 @@ public class Puerta {
 
     public Puerta() {
     }
+
+    public void setAbierta(boolean abierta) {
+        this.abierta = abierta;
+    }
 }

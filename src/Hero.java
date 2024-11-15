@@ -293,7 +293,9 @@ public class Hero implements Subject{
     }
 
     public void notifyObservers(int x, int y,Graphics2D pincel){
-        for(Observer observer : observersList) observer.update(x,y,pincel);
+        for(Observer observer : observersList) {
+            observer.update(x, y, pincel);
+        }
     }
     public void checkState(){
         Coordenada a = tablero.getCoordenada(posicion[0],posicion[1]);

@@ -17,6 +17,12 @@ public class MonG extends Villano{
 
     @Override
     public void update(int x, int y, Graphics2D pincel) {
+        if(!vivo){
+            this.vivo = true;
+            System.out.println("me guardéeeeeeeeeeeeeee");
+            pool.release(this);
+            return;
+        }
         moverVillano(x,y,pincel);
     }
 

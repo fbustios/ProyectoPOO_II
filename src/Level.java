@@ -8,9 +8,13 @@ public class Level {
     private Hero hero;
     private int numNivel;
     private int cantVill;
+    private int villanosRestantes;
     private double tiempo = 200;
+    private int spawnCounter = 0;
+    private int spawnInterval = 300;
     VillainPool pool;
     VillainPool poolMonG;
+    private static Random rand = new Random();
 
     Level(int i,Hero h, Tablero t, VillainPool p, VillainPool pMonG) {
         this.tab = t;
@@ -21,7 +25,7 @@ public class Level {
     }
 
     public void crearNivel(){
-        System.out.println("crearNivel varias veces");
+        System.out.println("Estoy creando un nivel");
             if(numNivel%5 != 0){
                 tab.setMurosMetal();
                 tab.setMurosLadrillo();
@@ -30,55 +34,56 @@ public class Level {
     }
 
     public void agregarVillano(){
-
         shuffle(pool.getNotInUse());
-        Random rand = new Random();
+
         Villano v = null;
-        for(int i = 0; i < pool.getNotInUse().size(); i++) {
-            v = pool.obtain(i);
-            if (!(v.getNivelInicial() <= numNivel)) {
-                pool.release(v);
-            } else break;
-            System.out.println("llegué aqui 1");
-        }
         if(cantVill != 0) {
-            System.out.println("En proceso de colocar villanos ...");
-                    boolean colocado = false;
-                    while (!colocado) {
-                        System.out.println("Colocando villanos ...");
-                        int idx = rand.nextInt(2, 13);
-                        int idx2 = rand.nextInt(2, 15);
-                        Coordenada c = tab.getCoordenada(idx,idx2);
-                        if (!c.getHayMuro()) {
-                            v.setXY(idx,idx2);
-                            v.setScreenXY(idx*48,idx2*48);
-                            c.setVillano(v);
-                            hero.attach(v);
-                            cantVill--;
-                            colocado = true;
-                        }
+            for(int i = 0; i < pool.getNotInUse().size(); i++) {
+                v = pool.obtain(i);
+
+                if (v.getNivelInicial() <= numNivel) {
+                    break;
+                } else {
+                    pool.release(v);
+                }
+
+                System.out.println("llegué aquí 1");
+            }
+        }
+        if(cantVill != 0 && v!=null) {
+            //System.out.println("En proceso de colocar villanos ...");
+                boolean colocado = false;
+                while (!colocado) {
+                    System.out.println("Colocando villanos ...");
+                    int idx = rand.nextInt(2, 13);
+                    int idx2 = rand.nextInt(2, 15);
+                    Coordenada c = tab.getCoordenada(idx,idx2);
+                    if (!c.getHayMuro()) {
+                        v.setXY(idx,idx2);
+                        v.setScreenXY(idx*48,idx2*48);
+                        c.setVillano(v);
+                        hero.attach(v);
+                        colocado = true;
                     }
+                }
+            cantVill--;
         }
     }
 
 
-    public void actualizarNivel(){
-        if(tiempo%5==0 && tiempo!=0){
-            System.out.println("me meti al if del tiempo");
-            if(cantVill!=0){
-                agregarVillano();
-                System.out.println("me metí al del cantVillanos");
-            }
-        }
-        else if(tiempo == 0){
-            //hacer los enemigos monedas giratorias y agregar segun la cantidad de bichos del nivel
+    public void actualizarNivel() {
+        if (spawnCounter >= spawnInterval && cantVill != 0) {
+            agregarVillano();
+            spawnCounter = 0; // Reinicia el contador después de generar un villano
+        } else {
+            spawnCounter++;
         }
 
-         // se llama por cada pintada para ir agregando villanos o ver si ya acabó.
-        if(cantVill==0){
+        if (cantVill == 0) {
             tab.setPuerta(true);
         }
     }
+
 
     public void setCantVill(){
         Random rand = new Random();
@@ -100,5 +105,9 @@ public class Level {
 
     public void setTiempo(double t){
         tiempo = t;
+    }
+
+    public int getVillanosRestantes() {
+        return villanosRestantes;
     }
 }

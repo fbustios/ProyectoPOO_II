@@ -7,6 +7,7 @@ public class LevelManager {
     private Hero hero;
     private boolean nivelCompletado = false;
     private int blackScreenCounter = 0;
+    private boolean perder = false;
     private Level level = null;
     VillainPool pool;
     VillainPool poolMonG;
@@ -15,7 +16,8 @@ public class LevelManager {
     LevelManager(GamePanel panel){
         this.tablero = new Tablero(panel);
         this.hero = Hero.getInstancia(tablero,panel,panel.KH);
-        this.pool = new VillainPool(tablero);
+        this.pool = VillainPool.getInstancia();
+        pool.agregar(tablero);
     }
 
 
@@ -32,32 +34,38 @@ public class LevelManager {
 
         tablero.draw(pincel);
         hero.draw(pincel);
-
+        /*
         if(vidaPerdida){
-            drawBlackScreen(pincel);
-            blackScreenCounter ++;
+            while(blackScreenCounter > 0) {
+                drawBlackScreen(pincel);
 
-            if (blackScreenCounter == 180) {
-                blackScreenCounter = 0;
-                vidaPerdida = false;
+                if (blackScreenCounter == 180) {
+                    blackScreenCounter = 0;
+                    vidaPerdida = false;
+                }
             }
-        }
+        }*/
     }
 
     public void update(){
         hero.update();
         level.actualizarNivel();
         if(!hero.isAlive() && hero.getVidas()!=0){
-            resetTablero(); vidaPerdida = true;
+            vidaPerdida = true;
+            while(!pool.getInUse().isEmpty()){
+                hero.detach(pool.getInUse().getFirst());
+                pool.release(pool.getInUse().getFirst());
+            }
         } else if(hero.isAlive() && hero.getVidas()==0){
             System.out.println("Perdio del todo");
+            this.perder = true;
         }
     }
     public void resetTablero(){
         tiempo = 200;
         tablero.vaciarTablero();
-        level.crearNivel();
     }
+
 
     public void resetHero(){
     }
@@ -67,6 +75,9 @@ public class LevelManager {
     }
     public boolean isVidaPerdido(){
         return vidaPerdida;
+    }
+    public void setVidaPerdida(boolean vidaPerdida){
+        this.vidaPerdida = vidaPerdida;
     }
 
     public void drawBlackScreen(Graphics2D pincel){
@@ -85,4 +96,6 @@ public class LevelManager {
     public Hero getHero() {return hero;}
 
     public Tablero getTablero() {return tablero;}
+
+    public boolean isPerder() {return perder;}
 }

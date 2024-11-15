@@ -4,6 +4,7 @@ import java.util.Observable;
 
 abstract public class Villano implements Observer {
     protected VillainMovement ia;
+    protected VillainPool pool;
     protected int nivelInicial;
     protected double velocidad;
     protected boolean atm;
@@ -15,6 +16,7 @@ abstract public class Villano implements Observer {
     protected int screenY = 0;
     protected Tablero tab;
     protected BufferedImage image, image0, image1;
+    protected Hero hero;
 
     public Villano(Tablero tab, int nivelInicial, double velocidad, boolean atm, int puntaje) {
         this.nivelInicial = nivelInicial;
@@ -23,7 +25,8 @@ abstract public class Villano implements Observer {
         this.puntaje = puntaje;
         vivo = true;
         this.tab = tab;
-
+        this.pool = VillainPool.getInstancia();
+        this.vivo = true;
     }
 
      public void update(int x, int y, Graphics2D pincel) {
@@ -81,5 +84,16 @@ abstract public class Villano implements Observer {
 
     public int getNivelInicial(){
         return this.nivelInicial;
+    }
+    public boolean isVivo(){
+        return this.vivo;
+    }
+
+    public void reset(){
+        this.vivo= true;
+        this.x = 0;
+        this.y = 0;
+        this.screenY = 0;
+        this.screenX = 0;
     }
 }

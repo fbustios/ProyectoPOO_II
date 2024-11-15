@@ -29,6 +29,7 @@ public class RandomSystem implements VillainMovement {
                 n.setVillano(v);
                 a.setVillano(null);
                 v.setXY(v.getX()+dx, v.getY()+dy);
+
                 return true;
             } else {
                 return false;
@@ -44,6 +45,12 @@ public class RandomSystem implements VillainMovement {
         int y = v.getY();
 
         double velocidad = v.getVelocidad();
+        Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
+        if(a.getHayFuego()){
+            v.setVivo(false);
+            a.setVillano(null);
+            System.out.println("Me morí");
+        }
 
         if(cont == 48){
             int i = rand.nextInt(0,4);
@@ -107,18 +114,18 @@ public class RandomSystem implements VillainMovement {
             }
 
             spriteCounter = 0;}
+
     }
 
     public void draw(Graphics2D pincel){
         System.out.println(v.getX() + " " + v.getY());
-        System.out.println(v.getScreenX() + " "+ v.getScreenY());
-
+        System.out.println(screenX + " " + screenY);
         BufferedImage image = null;
 
         if(spriteNumber==1){image = v.getImage0();}
         if(spriteNumber==2){image = v.getImage1();}
 
-        pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+        if(v.isVivo())pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
 
     public void setScreenXY(int x, int y){

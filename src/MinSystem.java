@@ -73,6 +73,13 @@ public class MinSystem implements VillainMovement {
         int x = v.getX();
         int y = v.getY();
 
+        Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
+        if(a.getHayFuego()){
+            v.setVivo(false);
+            a.setVillano(null);
+            System.out.println("Me morí");
+        }
+
         double velocidad = v.getVelocidad();
         if (Objects.equals(d, "Up")) {
             screenY -= velocidad;

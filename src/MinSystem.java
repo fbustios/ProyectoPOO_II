@@ -187,9 +187,10 @@ public class MinSystem implements VillainMovement {
         if(spriteNumber==2){image = v.getImage1();}
 
         cont--;
-        pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
 
-        //pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
+        pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
+
+        pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
     public void setScreenXY(int x, int y){
         this.screenX = x;

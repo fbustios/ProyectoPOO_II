@@ -9,14 +9,12 @@ public class VillainPool {
     }
 
     public void agregar(Tablero tab){
-        Globo g = new Globo(tab,1,1,100,false);
-        Globo g2 = new Globo(tab,1,1,100,false);
-        notInUse.add(g);
-        notInUse.add(g2);
-        MonG moneda = new MonG(tab,15,1,4000,true);
-        MonG moneda2 = new MonG(tab,15,1,4000,true);
-        //notInUse.add(moneda);
-        //notInUse.add(moneda2);
+        for(int i = 0; i < 6; i++){
+            notInUse.add(new Globo(tab,1,1,100,false));
+        }
+        for(int i = 0; i < 6; i++){
+            notInUse.add(new MonG(tab,15,1,4000,true));
+        }
     }
 
     public ArrayList<Villano> getNotInUse(){

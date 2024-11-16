@@ -45,7 +45,7 @@ public class Coordenada{
             Cesped = ImageIO.read(getClass().getResourceAsStream("\\Tiles\\Cesped1.png"));
             CespedFloreado = ImageIO.read(getClass().getResourceAsStream("\\Tiles\\CespedFloreado.png"));
             Fuego = ImageIO.read(getClass().getResourceAsStream("\\Things\\Bomba14.png"));
-            Bomba = ImageIO.read(getClass().getResourceAsStream("\\Things\\BombaC.jpg"));
+            Bomba = ImageIO.read(getClass().getResourceAsStream("\\Things\\BombaCesped.png"));
             Door = ImageIO.read(getClass().getResourceAsStream("\\Things\\Puerta.png"));
         } catch (IOException e){
             e.printStackTrace();

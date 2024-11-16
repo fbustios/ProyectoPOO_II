@@ -18,7 +18,7 @@ public class MinSystem implements VillainMovement {
     private int spriteCounter = 0;
     private int spriteNumber = 1;
 
-     MinSystem(Villano villano, Tablero tablero){
+    MinSystem(Villano villano, Tablero tablero){
         this.v = villano;
         this.tablero = tablero;
         this.screenX = v.getScreenY();
@@ -44,18 +44,18 @@ public class MinSystem implements VillainMovement {
     }
 
     public void updateGraphics(){
-             movs = bfs();
-         if(movs!=null){
+        movs = bfs();
+        if(movs!=null){
 
-             if(cambieCasilla) {
-                 System.out.println("me meti 2");
-                 if(movs.size()>0){
-                 d = movs.get(0);
-                 movs.remove(0);}
-                 cambieCasilla = false;
-             } else mover(d);
-         }
-         cont--;
+            if(cambieCasilla) {
+                System.out.println("me meti 2");
+                if(movs.size()>0){
+                    d = movs.get(0);
+                    movs.remove(0);}
+                cambieCasilla = false;
+            } else mover(d);
+        }
+        cont--;
 
         spriteCounter ++;
         if(spriteCounter > 48){
@@ -188,10 +188,12 @@ public class MinSystem implements VillainMovement {
 
         cont--;
         pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+
+        //pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
     }
     public void setScreenXY(int x, int y){
-         this.screenX = x;
-         this.screenY = y;
+        this.screenX = x;
+        this.screenY = y;
     }
 
 }

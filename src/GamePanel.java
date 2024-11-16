@@ -90,10 +90,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }else if (gameState == 2) {
             mensajes.mostrarMensaje("Pausa");
         }
-        if(lm.isVidaPerdido()) {
+        else if(lm.isVidaPerdido()) {
             startGameThread();
+
         }
         if (lm.isPerder()) {
+
+            mensajes.mostrarMensaje("Game Over");
             gameThread = null;
         }
         //checkear aca estado del juego para ver si hay que empezar el loop con un nivel diferente o ya se perdió.
@@ -103,6 +106,9 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         Graphics2D pincel = (Graphics2D) g;
         //imprimir las cosas en la pantalla
         lm.draw(pincel);
+        if(lm.isPerder()){
+            pincel.fillRect(0,0,48*15,48*13);
+        }
         mensajes.draw(pincel);
     }
 
@@ -121,4 +127,3 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         sonido.stop();
     }
 }
-

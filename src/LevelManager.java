@@ -1,5 +1,4 @@
 import java.awt.*;
-
 public class LevelManager {
     private double tiempo;
     private boolean vidaPerdida = false;
@@ -11,6 +10,7 @@ public class LevelManager {
     private Level level = null;
     VillainPool pool;
     VillainPool poolMonG;
+    int score = 0;
 
 
     LevelManager(GamePanel panel){
@@ -28,23 +28,23 @@ public class LevelManager {
         level.crearNivel();
     }
 
-    public void draw(Graphics2D pincel){
+    public void draw(Graphics2D pincel) {
 
         //System.out.println("Estoy pintando lm ...");
 
         tablero.draw(pincel);
         hero.draw(pincel);
-        /*
-        if(vidaPerdida){
-            while(blackScreenCounter > 0) {
-                drawBlackScreen(pincel);
 
-                if (blackScreenCounter == 180) {
-                    blackScreenCounter = 0;
-                    vidaPerdida = false;
-                }
+        if (vidaPerdida) {
+            System.out.println("Estoy pintando la pantalla negra");
+            drawBlackScreen(pincel);
+            blackScreenCounter ++;
+
+            if (blackScreenCounter == 60) {
+                blackScreenCounter = 0;
+                vidaPerdida = false;
             }
-        }*/
+        }
     }
 
     public void update(){
@@ -56,7 +56,7 @@ public class LevelManager {
                 hero.detach(pool.getInUse().getFirst());
                 pool.release(pool.getInUse().getFirst());
             }
-        } else if(hero.isAlive() && hero.getVidas()==0){
+        } else if(!hero.isAlive() && hero.getVidas()==0){
             System.out.println("Perdio del todo");
             this.perder = true;
         }
@@ -81,7 +81,8 @@ public class LevelManager {
     }
 
     public void drawBlackScreen(Graphics2D pincel){
-        pincel.drawRect(0,0,48*13,48*15);
+        pincel.setColor(Color.darkGray);
+        pincel.fillRect(0,0,48*15,48*13);
     }
 
     public double getTiempo(){return tiempo;}

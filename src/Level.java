@@ -26,11 +26,12 @@ public class Level {
 
     public void crearNivel(){
         System.out.println("Estoy creando un nivel");
-            if(numNivel%5 != 0){
-                tab.setMurosMetal();
-                tab.setMurosLadrillo();
-                setCantVill();
-            }
+        if(numNivel%5 != 0){
+            tab.setMurosMetal();
+            tab.setMurosLadrillo();
+            //setCantVill();
+            cantVill = 5;
+        }
     }
 
     public void agregarVillano(){
@@ -52,20 +53,20 @@ public class Level {
         }
         if(cantVill != 0 && v!=null) {
             //System.out.println("En proceso de colocar villanos ...");
-                boolean colocado = false;
-                while (!colocado) {
-                    System.out.println("Colocando villanos ...");
-                    int idx = rand.nextInt(2, 13);
-                    int idx2 = rand.nextInt(2, 15);
-                    Coordenada c = tab.getCoordenada(idx,idx2);
-                    if (!c.getHayMuro()) {
-                        v.setXY(idx,idx2);
-                        v.setScreenXY(idx*48,idx2*48);
-                        c.setVillano(v);
-                        hero.attach(v);
-                        colocado = true;
-                    }
+            boolean colocado = false;
+            while (!colocado) {
+                System.out.println("Colocando villanos ...");
+                int idx = rand.nextInt(2, 13);
+                int idx2 = rand.nextInt(2, 15);
+                Coordenada c = tab.getCoordenada(idx,idx2);
+                if (!c.getHayMuro()) {
+                    v.setXY(idx,idx2);
+                    v.setScreenXY(idx*48,idx2*48);
+                    c.setVillano(v);
+                    hero.attach(v);
+                    colocado = true;
                 }
+            }
             cantVill--;
         }
     }
@@ -111,3 +112,4 @@ public class Level {
         return villanosRestantes;
     }
 }
+

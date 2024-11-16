@@ -32,7 +32,7 @@ public class Tablero {
 
     public void setMurosLadrillo(){
         Random rand = new Random();
-        int cant = rand.nextInt(2,(tablero.length * tablero[0].length))/6;
+        int cant = rand.nextInt(5,(tablero.length * tablero[0].length))/6;
         boolean ponerPuerta = true;
         int colocados = 0;
         while(colocados<=cant){

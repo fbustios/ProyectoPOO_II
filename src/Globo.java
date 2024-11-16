@@ -10,7 +10,7 @@ public class Globo extends Villano{
 
         try {
             image0 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\globo0.png"));
-            image1 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\globo1.png"));
+            image1 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\globo111.png"));
         } catch (IOException e) {
             System.out.println("Error al leer el imagen");
             e.printStackTrace();

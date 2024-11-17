@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         //esto hay que meterlo en start level
         if(lm.isVidaPerdido()){
             lm.resetTablero();
+            System.out.println("me metí al gameThread");
             lm.setNivel(1);
             lm.setVidaPerdida(false);
         }
@@ -90,14 +91,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         }else if (gameState == 2) {
             mensajes.mostrarMensaje("Pausa");
         }
-        else if(lm.isVidaPerdido()) {
-            startGameThread();
-
-        }
         if (lm.isPerder()) {
 
             mensajes.mostrarMensaje("Game Over");
             gameThread = null;
+        }
+        if(lm.isVidaPerdido()) {
+            System.out.println("me metí al vida perdida");
+            lm.setTiempo(200);
+            startGameThread();
         }
         //checkear aca estado del juego para ver si hay que empezar el loop con un nivel diferente o ya se perdió.
     }

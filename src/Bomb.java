@@ -16,23 +16,23 @@ public class Bomb {
 
     public void explode(Tablero tab){
         Coordenada a = tab.getCoordenada(x,y);
-        a.setHayFuego(1500);
+        a.setHayFuego(1000);
         for(int i = 0; i <= rango; i++ ){
             Coordenada n = tab.getCoordenada(x+i,y);
             if(verificar(n)){
-                n.setHayFuego(1500);
+                n.setHayFuego(1000);
             }
             Coordenada n2 = tab.getCoordenada(x-i,y);
             if(verificar(n2)){
-                n2.setHayFuego(1500);
+                n2.setHayFuego(1000);
             }
             Coordenada n3 = tab.getCoordenada(x,y+i);
             if(verificar(n3)){
-                n3.setHayFuego(1500);
+                n3.setHayFuego(1000);
             }
             Coordenada n4 = tab.getCoordenada(x,y-i);
             if(verificar(n4)){
-                n4.setHayFuego(1500);
+                n4.setHayFuego(1000);
             }
         }
     }

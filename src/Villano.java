@@ -17,6 +17,7 @@ abstract public class Villano implements Observer {
     protected Tablero tab;
     protected BufferedImage image, image0, image1;
     protected Hero hero;
+    protected boolean active;
 
     public Villano(Tablero tab, int nivelInicial, double velocidad, boolean atm, int puntaje) {
         this.nivelInicial = nivelInicial;
@@ -27,6 +28,7 @@ abstract public class Villano implements Observer {
         this.tab = tab;
         this.pool = VillainPool.getInstancia();
         this.vivo = true;
+        this.active = false;
     }
 
      public void update(int x, int y, Graphics2D pincel) {
@@ -95,5 +97,16 @@ abstract public class Villano implements Observer {
         this.y = 0;
         this.screenY = 0;
         this.screenX = 0;
+        this.active = false;
+    }
+    public void setActive(boolean t){
+        this.active = t;
+    }
+    public boolean isActive(){
+        return this.active;
+    }
+
+    public void setIa(VillainMovement s){
+        this.ia = s;
     }
 }

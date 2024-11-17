@@ -23,6 +23,11 @@ public class Detonador {
             piscina.devolverBomba(expBomb);
         }
     }
+    public void retrieveBombs(Tablero tab, GamePanel panel){
+        while(!bombas.isEmpty()){
+            explodeBomb(tab,panel);
+        }
+    }
 
 
 }

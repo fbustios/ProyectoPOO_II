@@ -4,8 +4,6 @@ import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Espon extends Villano{
-    private boolean mismaFila;
-    private boolean mismaColumna;
     private String direction = "Up";
     private int cont = 48;
     private String d = "Down";
@@ -14,10 +12,9 @@ public class Espon extends Villano{
     private int spriteNumber;
     public Espon(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
-        ia = new RandomSystem(this,tab);
         try{
-            image0 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Bicho1.png"));
-            image1 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Bicho2.png"));
+            image0 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Barril0.png"));
+            image1 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Barril2.png"));
         } catch (Exception e){
             System.out.println("Error al leer el imagen");
             e.printStackTrace();
@@ -32,7 +29,8 @@ public class Espon extends Villano{
 
     @Override
     public void moverVillano(int x, int y, Graphics2D pincel) {
-
+        updateGraphics();
+        draw(pincel);
     }
     public boolean move(int dx, int dy) {
         Coordenada n = tab.getCoordenada(x + dx,  y + dy);
@@ -60,7 +58,8 @@ public class Espon extends Villano{
             a.setVillano(null);
             System.out.println("Me morí");
         }
-        if(!mismaFila && !mismaColumna) {
+        d = getDireccion();
+        if(d == "Nada") {
             if (cont == 48) {
                 int i = rand.nextInt(0, 4);
                 if (i == 0) {
@@ -74,8 +73,6 @@ public class Espon extends Villano{
                 }
                 cont = 0;
             }
-        } else {
-            getDireccion();
         }
         if (d == "Up") {
             direction = "up";
@@ -100,7 +97,7 @@ public class Espon extends Villano{
         } else if (d  == "Left") {
             direction = "left";
             screenX -= velocidad;
-            if (screenX < y * 48 - 10) {
+            if (screenX < y * 48 - 38) {
                 canMove = move(0,-1);
                 //System.out.println(canMove);
                 if (!canMove) {
@@ -136,12 +133,14 @@ public class Espon extends Villano{
     public void draw(Graphics2D pincel){
         System.out.println(x + " " + y);
         System.out.println(screenX + " " + screenY);
-        BufferedImage image = null;
 
-        if(spriteNumber==1){image = image1;}
+        if(spriteNumber==1){image = image0;}
         if(spriteNumber==2){image = image1;}
 
-        if(vivo)pincel.drawImage(image, screenX, screenY, tab.getCoordenada(1,1).length, tab.getCoordenada(1,1).length, null);
+        if(active){
+            System.out.println("Estoy activo");
+            pincel.drawImage(image0, screenX, screenY, tab.getCoordenada(1,1).length, tab.getCoordenada(1,1).length, null);
+        }
     }
 
     public void setScreenXY(int x, int y){
@@ -149,14 +148,26 @@ public class Espon extends Villano{
         this.screenY = y;
     }
 
-    public void getDireccion(){
-        d = "Up";
+    public String getDireccion(){
+        d = "Nada";
         for(int i = x; i < 13; i++ ){
-
+            if(tab.getCoordenada(i,y).getMuroMetal()!=null)break;
+            d = "Down";
         }
         for(int j = y; j < 15; j++){
+            if(tab.getCoordenada(x,j).getMuroMetal()!=null)break;
+            d =  "Right";
+        }
+        for(int n = x; n > 0; n--){
+            if(tab.getCoordenada(n,y).getMuroMetal()!=null)break;
+            d = "Up";
 
         }
+        for(int m = y; m > 0; m--){
+            if(tab.getCoordenada(x,m).getMuroMetal()!=null)break;
+            d = "Left";
+        }
+        return d;
     }
 
 

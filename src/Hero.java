@@ -2,15 +2,13 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.io.IOException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-
+import java.util.List;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class Hero implements Subject{
     private List<Observer> observersList = new ArrayList<>();
@@ -65,6 +63,7 @@ public class Hero implements Subject{
         Coordenada coordenada = tablero.getCoordenada(posicion[0], posicion[1]);
         if((!invulFuego && coordenada.getHayFuego())||coordenada.getVillano()!=null){
             vidas -= 1;
+            if(detonador!=null) detonador.retrieveBombs(tablero,panel);
             detonador = null;
             bombaRayado = false;
             muroRayado = false;
@@ -293,8 +292,11 @@ public class Hero implements Subject{
     }
 
     public void notifyObservers(int x, int y,Graphics2D pincel){
-        for(Observer observer : observersList) {
-            observer.update(x, y, pincel);
+        Iterator<Observer> iterator = observersList.iterator();
+        while(iterator.hasNext()) {
+            Observer observer = iterator.next();
+            if(!observer.isActive()) iterator.remove();
+            else observer.update(x, y, pincel);
         }
     }
     public void checkState(){

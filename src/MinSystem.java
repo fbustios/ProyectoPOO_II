@@ -44,6 +44,8 @@ public class MinSystem implements VillainMovement {
     }
 
     public void updateGraphics(){
+
+        if(v.isActive()){
         movs = bfs();
         if(movs!=null){
 
@@ -67,7 +69,7 @@ public class MinSystem implements VillainMovement {
             }
 
             spriteCounter = 0;}
-    }
+    }}
 
     public void mover(String d) {
         int x = v.getX();
@@ -190,7 +192,7 @@ public class MinSystem implements VillainMovement {
 
         pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
 
-        pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+        if(v.isActive())pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
     }
     public void setScreenXY(int x, int y){
         this.screenX = x;

@@ -30,7 +30,7 @@ public class Level {
             tab.setMurosMetal();
             tab.setMurosLadrillo();
             //setCantVill();
-            cantVill = 5;
+            cantVill = 3;
         }
     }
 
@@ -61,7 +61,7 @@ public class Level {
                 Coordenada c = tab.getCoordenada(idx,idx2);
                 if (!c.getHayMuro()) {
                     v.setXY(idx,idx2);
-                    v.setScreenXY(idx*48,idx2*48);
+                    v.setScreenXY(idx2*48,idx*48);
                     c.setVillano(v);
                     hero.attach(v);
                     colocado = true;

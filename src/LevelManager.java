@@ -24,7 +24,7 @@ public class LevelManager {
     public void setNivel(int i){
         System.out.println("Estoy haciendo un nivel ...");
         this.level = new Level(i, hero, tablero, pool,poolMonG);
-        this.tiempo = level.getTiempo();
+        setTiempo(200);
         level.crearNivel();
     }
 
@@ -36,11 +36,12 @@ public class LevelManager {
         hero.draw(pincel);
 
         if (vidaPerdida) {
+
             System.out.println("Estoy pintando la pantalla negra");
             drawBlackScreen(pincel);
             blackScreenCounter ++;
 
-            if (blackScreenCounter == 60) {
+            if (blackScreenCounter == 120) {
                 blackScreenCounter = 0;
                 vidaPerdida = false;
             }
@@ -55,6 +56,7 @@ public class LevelManager {
             while(!pool.getInUse().isEmpty()){
                 hero.detach(pool.getInUse().getFirst());
                 pool.release(pool.getInUse().getFirst());
+                System.out.println("me guardé correctamente");
             }
         } else if(!hero.isAlive() && hero.getVidas()==0){
             System.out.println("Perdio del todo");

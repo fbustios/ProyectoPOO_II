@@ -40,6 +40,7 @@ public class RandomSystem implements VillainMovement {
 
     @Override
     public void updateGraphics() {
+        if(v.isActive()){
         Random rand = new Random();
         int x = v.getX();
         int y = v.getY();
@@ -115,7 +116,7 @@ public class RandomSystem implements VillainMovement {
 
             spriteCounter = 0;}
 
-    }
+    }}
 
     public void draw(Graphics2D pincel){
         System.out.println(v.getX() + " " + v.getY());
@@ -129,7 +130,7 @@ public class RandomSystem implements VillainMovement {
         pincel.setColor(Color.yellow);
         pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
 
-        if(v.isVivo())pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+        if(v.isActive())pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
 
     }
 

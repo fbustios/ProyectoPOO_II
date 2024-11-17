@@ -56,6 +56,7 @@ public class LevelManager {
         level.actualizarNivel();
         if(level.isPuertaAbierta()){
             nivelCompletado = true;
+            hero.reposition();
             System.out.println("Nivel completado");
         }
         if(!hero.isAlive() && hero.getVidas()!=0){
@@ -74,10 +75,6 @@ public class LevelManager {
     public void resetTablero(){
         tiempo = 200;
         tablero.vaciarTablero();
-    }
-
-
-    public void resetHero(){
     }
 
     public boolean isNivelCompletado(){
@@ -109,4 +106,8 @@ public class LevelManager {
     public Tablero getTablero() {return tablero;}
 
     public boolean isPerder() {return perder;}
+
+    public void setNivelCompletado(boolean t){
+        this.nivelCompletado = t;
+    }
 }

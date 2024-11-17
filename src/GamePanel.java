@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     Sonido sonido = new Sonido();
 
     LevelManager lm = new LevelManager(this);
+    int nivelActual = 1;
 
     int gameState = 1;
 
@@ -41,12 +42,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
     public void startGameThread(){
 
-        lm.setNivel(1);
+        lm.setNivel(nivelActual);
         //esto hay que meterlo en start level
         if(lm.isVidaPerdido()){
             lm.resetTablero();
             System.out.println("me metí al gameThread");
-            lm.setNivel(1);
+            lm.setNivel(nivelActual);
             lm.setVidaPerdida(false);
         }
         gameThread = new Thread(this);
@@ -99,6 +100,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
         if(lm.isVidaPerdido()) {
             System.out.println("me metí al vida perdida");
             lm.setTiempo(200);
+            startGameThread();
+        }
+        if(lm.isNivelCompletado()){
+            System.out.println("Completó el nivel exitosamente, avanza de nivel");
+            lm.setTiempo(200);
+            nivelActual++;
+            lm.setNivelCompletado(false);
+            lm.resetTablero();
             startGameThread();
         }
         //checkear aca estado del juego para ver si hay que empezar el loop con un nivel diferente o ya se perdió.

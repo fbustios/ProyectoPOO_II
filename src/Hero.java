@@ -130,6 +130,13 @@ public class Hero implements Subject{
 
     }
 
+    public void reposition(){
+        this.posicion[0] = 0;
+        this.posicion[1] = 0;
+        this.X = 0;
+        this.Y = 0;
+    }
+
     public boolean move(int dx, int dy) {
         Coordenada n = tablero.getCoordenada(posicion[0] + dx, posicion[1] + dy);
         Coordenada a = tablero.getCoordenada(posicion[0], posicion[1]);

@@ -13,7 +13,7 @@ public class VillainPool {
             notInUse.add(new Globo(tab,1,1,100,false));
         }
         for(int i = 0; i < 6; i++){
-            notInUse.add(new MonG(tab,15,1,4000,true));
+            notInUse.add(new MonG(tab,2,1,4000,true));
         }
         for(int i = 0; i < 1; i++ ){
             notInUse.add(new Espon(tab,1,1,1000,true));

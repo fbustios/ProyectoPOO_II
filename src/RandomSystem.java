@@ -127,8 +127,8 @@ public class RandomSystem implements VillainMovement {
         if(spriteNumber==2){image = v.getImage1();}
 
 
-        pincel.setColor(Color.yellow);
-        pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
+        //pincel.setColor(Color.yellow);
+        //pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
 
         if(v.isActive())pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
 

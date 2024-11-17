@@ -9,9 +9,9 @@ public class VillainPool {
     }
 
     public void agregar(Tablero tab){
-        //for(int i = 0; i < 0; i++){
-            //notInUse.add(new Globo(tab,1,1,100,false));
-        //}
+        for(int i = 0; i < 6; i++){
+            notInUse.add(new Globo(tab,1,1,100,false));
+        }
         for(int i = 0; i < 6; i++){
             notInUse.add(new MonG(tab,15,1,4000,true));
         }

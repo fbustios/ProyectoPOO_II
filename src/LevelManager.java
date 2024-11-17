@@ -1,7 +1,11 @@
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LevelManager {
     private double tiempo;
     private boolean vidaPerdida = false;
+    private boolean vidaPerdida2 = false;
     private Tablero tablero;
     private Hero hero;
     private boolean nivelCompletado = false;
@@ -35,15 +39,14 @@ public class LevelManager {
         tablero.draw(pincel);
         hero.draw(pincel);
 
-        if (vidaPerdida) {
-
+        if (vidaPerdida2) {
             System.out.println("Estoy pintando la pantalla negra");
             drawBlackScreen(pincel);
             blackScreenCounter ++;
 
-            if (blackScreenCounter == 120) {
+            if (blackScreenCounter == 60) {
                 blackScreenCounter = 0;
-                vidaPerdida = false;
+                vidaPerdida2 = false;
             }
         }
     }
@@ -51,8 +54,13 @@ public class LevelManager {
     public void update(){
         hero.update();
         level.actualizarNivel();
+        if(level.isPuertaAbierta()){
+            nivelCompletado = true;
+            System.out.println("Nivel completado");
+        }
         if(!hero.isAlive() && hero.getVidas()!=0){
             vidaPerdida = true;
+            vidaPerdida2 = true;
             while(!pool.getInUse().isEmpty()){
                 hero.detach(pool.getInUse().getFirst());
                 pool.release(pool.getInUse().getFirst());

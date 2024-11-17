@@ -24,7 +24,12 @@ public class Espon extends Villano{
 
     @Override
     public void update(int x, int y, Graphics2D pincel) {
-        moverVillano(x,y, pincel);
+        if(!vivo){
+            System.out.println("me guardéeeeeeeeeeeeeee");
+            pool.release(this);
+            return;
+        }
+        moverVillano(x,y,pincel);
     }
 
     @Override
@@ -51,7 +56,6 @@ public class Espon extends Villano{
 
     public void updateGraphics() {
         Random rand = new Random();
-
         Coordenada a = tab.getCoordenada(x, y);
         if(a.getHayFuego()){
             vivo = false;
@@ -71,7 +75,7 @@ public class Espon extends Villano{
                 } else if (i == 3) {
                     d = "Right";
                 }
-                cont = 0;
+                cont = 42;
             }
         }
         if (d == "Up") {
@@ -152,20 +156,20 @@ public class Espon extends Villano{
         d = "Nada";
         for(int i = x; i < 13; i++ ){
             if(tab.getCoordenada(i,y).getMuroMetal()!=null)break;
-            d = "Down";
+            if(tab.getCoordenada(i,y).hayHero()) d = "Down";
         }
         for(int j = y; j < 15; j++){
             if(tab.getCoordenada(x,j).getMuroMetal()!=null)break;
-            d =  "Right";
+            if(tab.getCoordenada(x,j).hayHero()) d =  "Right";
         }
         for(int n = x; n > 0; n--){
             if(tab.getCoordenada(n,y).getMuroMetal()!=null)break;
-            d = "Up";
+            if(tab.getCoordenada(n,y).hayHero()) d = "Up";
 
         }
         for(int m = y; m > 0; m--){
             if(tab.getCoordenada(x,m).getMuroMetal()!=null)break;
-            d = "Left";
+            if(tab.getCoordenada(x,m).hayHero()) d = "Left";
         }
         return d;
     }

@@ -9,9 +9,11 @@ public class Level {
     private int numNivel;
     private int cantVill;
     private int villanosRestantes;
+    private boolean noVillainsLeft;
     private double tiempo = 200;
     private int spawnCounter = 0;
     private int spawnInterval = 300;
+    private boolean puertaAbierta = false;
     VillainPool pool;
     VillainPool poolMonG;
     private static Random rand = new Random();
@@ -22,6 +24,7 @@ public class Level {
         this.numNivel = i;
         this.pool = p;
         this.poolMonG = pMonG;
+        this.noVillainsLeft = false;
     }
 
     public void crearNivel(){
@@ -29,8 +32,9 @@ public class Level {
         if(numNivel%5 != 0){
             tab.setMurosMetal();
             tab.setMurosLadrillo();
+            tab.setPuerta(false);
             //setCantVill();
-            cantVill = 3;
+            cantVill=1;
         }
     }
 
@@ -75,13 +79,14 @@ public class Level {
     public void actualizarNivel() {
         if (spawnCounter >= spawnInterval && cantVill != 0) {
             agregarVillano();
-            spawnCounter = 0; // Reinicia el contador después de generar un villano
+            spawnCounter = 0;
         } else {
             spawnCounter++;
         }
-
-        if (cantVill == 0) {
+        if(cantVill==0) noVillainsLeft = true;
+        if (pool.getInUse().isEmpty() && noVillainsLeft) {
             tab.setPuerta(true);
+            this.puertaAbierta = true;
         }
     }
 
@@ -110,6 +115,10 @@ public class Level {
 
     public int getVillanosRestantes() {
         return villanosRestantes;
+    }
+
+    public boolean isPuertaAbierta(){
+        return puertaAbierta;
     }
 }
 

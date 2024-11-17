@@ -54,7 +54,7 @@ public class LevelManager {
     public void update(){
         hero.update();
         level.actualizarNivel();
-        if(level.isPuertaAbierta()){
+        if(level.isPuertaAbierta() && tablero.getPuertaX() == hero.getX() && tablero.getPuertaY() == hero.getY()){
             nivelCompletado = true;
             hero.reposition();
             System.out.println("Nivel completado");

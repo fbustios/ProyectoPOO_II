@@ -8,7 +8,9 @@ public class Puerta {
     private int x;
     private int y;
 
-    public Puerta() {
+    public Puerta(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public void setAbierta(boolean abierta) {
@@ -16,5 +18,11 @@ public class Puerta {
     }
     public void setDescubiera(boolean descubierta) {
         this.descubierta = descubierta;
+    }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
     }
 }

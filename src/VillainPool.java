@@ -9,14 +9,17 @@ public class VillainPool {
     }
 
     public void agregar(Tablero tab){
-        for(int i = 0; i < 6; i++){
-            notInUse.add(new Globo(tab,1,1,100,false));
+        for(int i = 0; i < 3; i++){
+            //notInUse.add(new Globo(tab,1,1,100,false));
         }
-        for(int i = 0; i < 6; i++){
-            notInUse.add(new MonG(tab,2,1,4000,true));
+        for(int i = 0; i < 1; i++){
+            notInUse.add(new Mon(tab,1,1,3000,false));
         }
-        for(int i = 0; i < 1; i++ ){
-            notInUse.add(new Espon(tab,1,1,1000,true));
+        for(int i = 0; i < 2; i++){
+            notInUse.add(new MonG(tab,14,1,4000,true));
+        }
+        for(int i = 0; i < 2; i++ ){
+            notInUse.add(new Espon(tab,6,1,1000,true));
         }
     }
 

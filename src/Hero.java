@@ -340,4 +340,11 @@ public class Hero implements Subject{
     public boolean isAlive() {
         return alive;
     }
+
+    public int getX(){
+        return this.posicion[0];
+    }
+    public int getY(){
+        return this.posicion[1];
+    }
 }

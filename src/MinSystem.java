@@ -21,10 +21,9 @@ public class MinSystem implements VillainMovement {
     MinSystem(Villano villano, Tablero tablero){
         this.v = villano;
         this.tablero = tablero;
-        this.screenX = v.getScreenY();
-        this.screenY = v.getScreenX();
         this.atm = v.getAtm();
         this.movs = null;
+
     }
 
     public boolean move(int dx, int dy) {
@@ -74,6 +73,8 @@ public class MinSystem implements VillainMovement {
     public void mover(String d) {
         int x = v.getX();
         int y = v.getY();
+        screenX = v.getScreenX();
+        screenY = v.getScreenY();
 
         Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
         if(a.getHayFuego()){
@@ -180,8 +181,8 @@ public class MinSystem implements VillainMovement {
     }
 
     public void draw(Graphics2D pincel){
-        System.out.println(v.getX() + " " + v.getY());
-        System.out.println(screenX + " " + screenY);
+        //System.out.println(v.getX() + " " + v.getY());
+        //System.out.println(screenX + " " + screenY);
 
         BufferedImage image = null;
 
@@ -198,5 +199,6 @@ public class MinSystem implements VillainMovement {
         this.screenX = x;
         this.screenY = y;
     }
+
 
 }

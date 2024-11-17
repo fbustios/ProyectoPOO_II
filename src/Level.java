@@ -33,8 +33,7 @@ public class Level {
             tab.setMurosMetal();
             tab.setMurosLadrillo();
             tab.setPuerta(false);
-            //setCantVill();
-            cantVill=1;
+            setCantVill();
         }
     }
 

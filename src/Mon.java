@@ -5,12 +5,11 @@ import java.io.IOException;
 import static java.lang.Math.abs;
 
 public class Mon extends Villano{
-    VillainMovement ia;
     VillainMovement ia2;
     public Mon(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
-        this.ia = new MinSystem(this,tab);
-        this.ia2 = new RandomSystem(this,tab);
+        ia = new MinSystem(this,tab);
+        ia2 = new RandomSystem(this,tab);
         try{
             image0 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Moneda0.png"));
             image1 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Moneda1.png"));
@@ -22,10 +21,16 @@ public class Mon extends Villano{
 
     @Override
     public void update(int x, int y, Graphics2D pincel) {
-        moverVillano(x,y, pincel);
+        if(!vivo){
+            System.out.println("me guardéeeeeeeeeeeeeee");
+            pool.release(this);
+            return;
+        }
+        moverVillano(x,y,pincel);
     }
 
     public void moverVillano(int x, int y, Graphics2D pincel) {
+
         if(abs(x - this.x) < 7 && (y - this.y) < 7){
             ia.updateGraphics();
             ia.draw(pincel);
@@ -33,5 +38,6 @@ public class Mon extends Villano{
             ia2.updateGraphics();
             ia2.draw(pincel);
         }
+        System.out.println("x: " + this.x + " " + "y: " + this.y);
     }
 }

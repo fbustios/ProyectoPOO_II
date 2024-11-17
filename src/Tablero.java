@@ -40,7 +40,7 @@ public class Tablero {
             int idx2 = rand.nextInt(2, tablero[0].length);
             if(!tablero[idx][idx2].getHayMuro()){
                 if(ponerPuerta){
-                    this.puerta = new Puerta();
+                    this.puerta = new Puerta(idx,idx2);
                     tablero[idx][idx2].setPuerta(puerta);
                     ponerPuerta = false;
                 }
@@ -72,7 +72,12 @@ public class Tablero {
             }
         }
     }
-
+    public int getPuertaX(){
+       return puerta.getX();
+    }
+    public int getPuertaY(){
+        return puerta.getY();
+    }
 
     public void setPuerta(boolean estado){
         puerta.setAbierta(estado);

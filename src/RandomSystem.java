@@ -13,12 +13,14 @@ public class RandomSystem implements VillainMovement {
     private int cont = 48;
     private int spriteCounter = 0;
     private int spriteNumber = 1;
-    private int screenX = 0;
-    private int screenY = 0;
+    private int screenX;
+    private int screenY;
 
     RandomSystem(Villano villano, Tablero tablero){
         this.v = villano;
         this.tablero = tablero;
+        this.screenX = v.getScreenX();
+        this.screenY = v.getScreenY();
     }
 
     public boolean move(int dx, int dy) {
@@ -44,6 +46,8 @@ public class RandomSystem implements VillainMovement {
         Random rand = new Random();
         int x = v.getX();
         int y = v.getY();
+        screenX = v.getScreenX();
+        screenY = v.getScreenY();
 
         double velocidad = v.getVelocidad();
         Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
@@ -119,8 +123,8 @@ public class RandomSystem implements VillainMovement {
     }}
 
     public void draw(Graphics2D pincel){
-        System.out.println(v.getX() + " " + v.getY());
-        System.out.println(screenX + " " + screenY);
+        //System.out.println(v.getX() + " " + v.getY());
+        //System.out.println(screenX + " " + screenY);
         BufferedImage image = null;
 
         if(spriteNumber==1){image = v.getImage0();}
@@ -130,7 +134,7 @@ public class RandomSystem implements VillainMovement {
         //pincel.setColor(Color.yellow);
         //pincel.fillRect(v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length);
 
-        if(v.isActive())pincel.drawImage(image, v.getScreenX(), v.getScreenY(), tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
+        if(v.isActive())pincel.drawImage(image, screenX, screenY, tablero.getCoordenada(1,1).length, tablero.getCoordenada(1,1).length, null);
 
     }
 

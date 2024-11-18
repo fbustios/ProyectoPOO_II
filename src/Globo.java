@@ -5,6 +5,7 @@ import java.io.IOException;
 
 public class Globo extends Villano{
     int cont = 2;
+    private int num = 1;
     public Globo(Tablero tab, int nivelInicial,double velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
         this.ia = new RandomSystem(this,tab);
@@ -22,6 +23,8 @@ public class Globo extends Villano{
     public void update(int x, int y, Graphics2D pincel, GamePanel panel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
+            panel.mensajes.mostrarMensaje(String.valueOf(puntaje));
+            ScoreBoard.getInstance().sumScore(puntaje,num);
             pool.release(this); cont = 2;
             return;
         }

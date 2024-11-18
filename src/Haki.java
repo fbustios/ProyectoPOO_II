@@ -10,6 +10,7 @@ public class Haki extends Villano{
     private int cont = 400;
     private static Random rand = new Random();
     private int r = rand.nextInt(0,100);
+    private int num = 1;
 
     public Haki(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
@@ -28,6 +29,8 @@ public class Haki extends Villano{
     public void update(int x, int y, Graphics2D pincel, GamePanel panel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
+            panel.mensajes.mostrarMensaje(String.valueOf(puntaje));
+            ScoreBoard.getInstance().sumScore(puntaje,num);
             pool.release(this);
             return;
         }

@@ -15,7 +15,6 @@ public class LevelManager {
     private Level level = null;
     private VillainPool pool;
     private VillainPool poolMonG;
-    int score = 0;
     private GamePanel panel;
 
 

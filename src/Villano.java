@@ -8,7 +8,7 @@ abstract public class Villano implements Observer {
     protected int nivelInicial;
     protected double velocidad;
     protected boolean atm;
-    protected int puntaje;
+    protected long puntaje;
     protected boolean vivo;
     protected int x = 0;
     protected int y = 0;
@@ -20,7 +20,7 @@ abstract public class Villano implements Observer {
     protected Hero hero;
     protected boolean active;
 
-    public Villano(Tablero tab, int nivelInicial, double velocidad, boolean atm, int puntaje) {
+    public Villano(Tablero tab, int nivelInicial, double velocidad, boolean atm, long puntaje) {
         this.nivelInicial = nivelInicial;
         this.velocidad = velocidad;
         this.atm = atm;

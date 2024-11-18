@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class Cel extends Villano{
     int cont = 2;
+    private int num = 1;
     public Cel(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
         this.ia = new RandomSystem(this,tab);
@@ -20,6 +21,8 @@ public class Cel extends Villano{
     public void update(int x, int y, Graphics2D pincel, GamePanel panel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
+            panel.mensajes.mostrarMensaje(String.valueOf(puntaje));
+            ScoreBoard.getInstance().sumScore(puntaje,num);
             pool.release(this); cont = 2;
             return;
         }

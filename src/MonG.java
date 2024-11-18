@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class MonG extends Villano{
     int cont = 1;
+    private int num = 1;
     public MonG(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm, boolean extra){
         super(tab,nivelInicial,velocidad,atm,puntaje);
         ia = new MinSystem(this,tab);
@@ -22,6 +23,8 @@ public class MonG extends Villano{
         if(!vivo){
             ia = new MinSystem(this,tab);
             System.out.println("me guardéeeeeeeeeeeeeee");
+            panel.mensajes.mostrarMensaje(String.valueOf(puntaje));
+            ScoreBoard.getInstance().sumScore(puntaje,num);
             if(!extra) pool.release(this); cont = 1;
             return;
         }

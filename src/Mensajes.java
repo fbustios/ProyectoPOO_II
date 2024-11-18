@@ -26,7 +26,7 @@ public class Mensajes {
             g2.drawString("Vidas:" + panel.lm.getHero().getVidas(), 50, 30);
         }else{g2.drawString("Vidas: 0" , 50, 30);}
 
-        g2.drawString("Puntaje:" + panel.lm.score, 250, 615);
+        g2.drawString("Puntaje:" + ScoreBoard.getInstance().getScore(), 250, 615);
         if(panel.lm.getTiempo()>0){
             g2.drawString("Tiempo:" + df.format(panel.lm.getTiempo()), 500, 30);}
         else{g2.drawString("Tiempo: 0,0" , 500, 30);}

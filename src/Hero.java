@@ -30,6 +30,7 @@ public class Hero implements Subject{
     private int Y;
     private boolean canMove = true;
     private BombPool bombas = BombPool.getBombPool();
+    private long lastScore = 0;
 
     //Variables de impresion
     private BufferedImage atras0, atras1, atras2, frente0, frente1, frente2, izquierda0, izquierda1, izquierda2, derecha0, derecha1, derecha2;
@@ -365,6 +366,10 @@ public class Hero implements Subject{
         }
         if(a.getCuponBombaDorada()){
             bombas.aplicarBombaDorada();
+        }
+        if(ScoreBoard.getInstance().getScore()%100000==0 && ScoreBoard.getInstance().getScore()!=lastScore){
+            lastScore = ScoreBoard.getInstance().getScore();
+            vidas++;
         }
         alive = restarVida();
     }

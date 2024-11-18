@@ -12,6 +12,7 @@ public class Espon extends Villano{
     private boolean canMove = true;
     private int spriteCounter;
     private int spriteNumber;
+    private int num = 1;
     public Espon(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
         try{
@@ -28,6 +29,8 @@ public class Espon extends Villano{
     public void update(int x, int y, Graphics2D pincel, GamePanel panel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
+            panel.mensajes.mostrarMensaje(String.valueOf(puntaje));
+            ScoreBoard.getInstance().sumScore(puntaje,num);
             pool.release(this);
             return;
         }

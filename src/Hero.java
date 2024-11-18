@@ -133,6 +133,21 @@ public class Hero implements Subject{
 
     }
 
+    public void resetHero(){
+        detonador = null;
+        bombaRayado = false;
+        //falta el metodo de bombpool para quitar capacidad(bomba dorada)
+        //quitar rango tambien(sol)
+        invencible = false;
+        muroRayado = false;
+        invulFuego = false;
+        posicion[0] = 0;
+        posicion[1] = 0;
+        X = 0;
+        Y = 0;
+        velocidad = 1;
+    }
+
     public void reposition(){
         this.posicion[0] = 0;
         this.posicion[1] = 0;
@@ -144,7 +159,7 @@ public class Hero implements Subject{
         Coordenada n = tablero.getCoordenada(posicion[0] + dx, posicion[1] + dy);
         Coordenada a = tablero.getCoordenada(posicion[0], posicion[1]);
         if (n != null) {
-            if (!n.getHayMuro()) {
+            if (!n.getHayMuro()) { //aqui falta el verificar de arriba que toma en cuenta cupones
                 n.setHero(this);
                 a.setHero(null);
                 posicion[0] += dx;

@@ -19,23 +19,25 @@ public class Globo extends Villano{
     }
 
     @Override
-    public void update(int x, int y, Graphics2D pincel) {
+    public void update(int x, int y, Graphics2D pincel, GamePanel panel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
             pool.release(this); cont = 2;
             return;
         }
-        moverVillano(x,y,pincel);
+        moverVillano(x,y,pincel,panel);
     }
 
     @Override
-    public void moverVillano(int x, int y, Graphics2D pincel) {
-
-        if(cont==0){
-            ia.updateGraphics(); cont = 2;
-        }
-        ia.draw(pincel);
-        cont--;
+    public void moverVillano(int x, int y, Graphics2D pincel,GamePanel panel) {
+        if (panel.gameState == 1) {
+            if (cont == 0) {
+                ia.updateGraphics();
+                cont = 2;
+            }
+            ia.draw(pincel);
+            cont--;
+        }else{ia.draw(pincel);}
     }
 
 }

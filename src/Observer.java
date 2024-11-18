@@ -1,6 +1,6 @@
 import java.awt.*;
 
 public interface Observer {
-    void update(int x, int y, Graphics2D pincel);
+    void update(int x, int y, Graphics2D pincel, GamePanel panel);
     boolean isActive();
 }

@@ -33,10 +33,10 @@ abstract public class Villano implements Observer {
         this.extra = false;
     }
 
-     public void update(int x, int y, Graphics2D pincel) {
-        moverVillano(x, y,pincel);
+     public void update(int x, int y, Graphics2D pincel,GamePanel panel) {
+        moverVillano(x, y,pincel,panel);
     }
-    abstract public void moverVillano(int x, int y, Graphics2D pincel);
+    abstract public void moverVillano(int x, int y, Graphics2D pincel, GamePanel panel);
 
     public void setXY(int x,int y) {
         this.x = x;

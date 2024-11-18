@@ -11,6 +11,7 @@ public class VillainPool {
     public void agregar(Tablero tab){
         for(int i = 0; i < 10; i++){
             notInUse.add(new Globo(tab,1,1,100,false));
+            notInUse.add(new Cel(tab,2,1,200,false));
             notInUse.add(new Mon(tab,11,1,3000,false));
             notInUse.add(new MonG(tab,14,1,4000,true,false));
             notInUse.add(new Espon(tab,6,1,1000,true));

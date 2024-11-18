@@ -321,7 +321,7 @@ public class Hero implements Subject{
         while(iterator.hasNext()) {
             Observer observer = iterator.next();
             if(!observer.isActive()) iterator.remove();
-            else observer.update(x, y, pincel);
+            else observer.update(x, y, pincel,panel);
         }
     }
     public void checkState(){

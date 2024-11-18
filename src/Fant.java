@@ -23,30 +23,32 @@ public class Fant extends Villano{
     }
 
     @Override
-    public void update(int x, int y, Graphics2D pincel) {
+    public void update(int x, int y, Graphics2D pincel,GamePanel panel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
             pool.release(this);
             return;
         }
-        moverVillano(x,y,pincel);
+        moverVillano(x,y,pincel,panel);
     }
 
-    public void moverVillano(int x, int y, Graphics2D pincel) {
-        Random rand = new Random();
-        if(cont == 400){
-            r = rand.nextInt(0,100);
-            cont = 0;
-        }
-        if(r > 75){
-            ia.updateGraphics();
-            //ia.draw(pincel);
-        } else {
-            ia2.updateGraphics();
-            //ia2.draw(pincel);
-        }
-        ia.draw(pincel);
-        cont++;
-        System.out.println("x: " + this.x + " " + "y: " + this.y);
+    public void moverVillano(int x, int y, Graphics2D pincel, GamePanel panel) {
+        if (panel.gameState == 1) {
+            Random rand = new Random();
+            if (cont == 400) {
+                r = rand.nextInt(0, 100);
+                cont = 0;
+            }
+            if (r > 75) {
+                ia.updateGraphics();
+                //ia.draw(pincel);
+            } else {
+                ia2.updateGraphics();
+                //ia2.draw(pincel);
+            }
+            ia.draw(pincel);
+            cont++;
+            System.out.println("x: " + this.x + " " + "y: " + this.y);
+        }else{ia.draw(pincel);}
     }
 }

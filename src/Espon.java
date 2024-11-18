@@ -25,18 +25,18 @@ public class Espon extends Villano{
     }
 
     @Override
-    public void update(int x, int y, Graphics2D pincel) {
+    public void update(int x, int y, Graphics2D pincel, GamePanel panel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
             pool.release(this);
             return;
         }
-        moverVillano(x,y,pincel);
+        moverVillano(x,y,pincel,panel);
     }
 
     @Override
-    public void moverVillano(int x, int y, Graphics2D pincel) {
-        updateGraphics();
+    public void moverVillano(int x, int y, Graphics2D pincel, GamePanel panel) {
+        if(panel.gameState == 1){updateGraphics();}
         draw(pincel);
     }
     public boolean move(int dx, int dy) {

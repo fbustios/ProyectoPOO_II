@@ -49,10 +49,10 @@ public class MinSystem implements VillainMovement {
         if(movs!=null){
 
             if(cambieCasilla) {
-                System.out.println("me meti 2");
-                if(movs.size()>0){
-                    d = movs.get(0);
-                    movs.remove(0);}
+                //System.out.println("me meti 2");
+                if(!movs.isEmpty()){
+                    d = movs.getFirst();
+                    movs.removeFirst();}
                 cambieCasilla = false;
             } else mover(d);
         }
@@ -75,7 +75,6 @@ public class MinSystem implements VillainMovement {
         int y = v.getY();
         screenX = v.getScreenX();
         screenY = v.getScreenY();
-
         Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
         if(a.getHayFuego()){
             v.setVivo(false);

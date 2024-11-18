@@ -18,7 +18,8 @@ public class Hero implements Subject{
     private Tablero tablero;
     private int[] posicion = new int[2];
     private static Hero instancia = null;
-    private Detonador detonador = new Detonador();
+    private Detonador detonador = null;
+    private boolean invencible = false;
     private boolean muroRayado = false;
     private boolean bombaRayado = false;
     private boolean invulFuego = false;
@@ -61,17 +62,19 @@ public class Hero implements Subject{
 
     public boolean restarVida(){
         Coordenada coordenada = tablero.getCoordenada(posicion[0], posicion[1]);
-        if((!invulFuego && coordenada.getHayFuego())||coordenada.getVillano()!=null){
+        if(((!invulFuego && coordenada.getHayFuego())||coordenada.getVillano()!=null) && !invencible){
             vidas -= 1;
             if(detonador!=null) detonador.retrieveBombs(tablero,panel);
             detonador = null;
             bombaRayado = false;
+            invencible = false;
             muroRayado = false;
             invulFuego = false;
             posicion[0] = 0;
             posicion[1] = 0;
             X = 0;
             Y = 0;
+            velocidad = 1;
             return false;
         }
         return true;
@@ -310,29 +313,43 @@ public class Hero implements Subject{
         Coordenada a = tablero.getCoordenada(posicion[0],posicion[1]);
         if(a.getCuponPatin()){
             this.patin = true;
-            this.velocidad += 1.5;
+            this.velocidad++;
             a.setCuponPatin(false);
+            a.setHayCupon(false);
         }
         if(a.getCuponMuroRayado()){
             this.muroRayado = true;
             a.setCuponMuroRayado(false);
+            a.setHayCupon(false);
         }
         if(a.getCuponBombaRayado()){
             this.bombaRayado = true;
             a.setCuponBombaRayado(false);
+            a.setHayCupon(false);
         }
         if(a.getCuponHombreLlamas()){
             this.invulFuego = true;
             a.setCuponHombreLlamas(false);
+            a.setHayCupon(false);
         }
         if(a.getCuponPregunta()){
             this.invulFuego = true; //falta lo del tiempo;
             a.setCuponPregunta(false);
+            a.setHayCupon(false);
         }
         if(a.getCuponSol()){
             a.setCuponSol(false);
             bombas.actualizarRango(2);
-            //set de las bombas del detonador;
+            System.out.println("agarré el cupón");
+            a.setHayCupon(false);
+        }
+        if(a.hayDetonador()){
+            detonador = new Detonador();
+            a.setHayDetonador(false);
+            a.setHayCupon(false);
+        }
+        if(a.getCuponBombaDorada()){
+            bombas.aplicarBombaDorada();
         }
         alive = restarVida();
     }
@@ -346,5 +363,9 @@ public class Hero implements Subject{
     }
     public int getY(){
         return this.posicion[1];
+    }
+
+    public void setInvencible(boolean t){
+        this.invencible = t;
     }
 }

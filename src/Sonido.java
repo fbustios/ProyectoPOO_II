@@ -12,6 +12,7 @@ public class Sonido {
         soundURL[1] = getClass().getResource("\\Sounds\\explode.wav");
         soundURL[2] = getClass().getResource("\\Sounds\\mario_is_a_weenie.wav");
         soundURL[3] = getClass().getResource("\\Sounds\\putbomb.wav");
+        soundURL[4] = getClass().getResource("\\Sounds\\winlevel.wav");
     }
 
     public void setFile(int i) {

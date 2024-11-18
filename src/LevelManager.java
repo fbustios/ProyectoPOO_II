@@ -11,10 +11,12 @@ public class LevelManager {
     private boolean nivelCompletado = false;
     private int blackScreenCounter = 0;
     private boolean perder = false;
+    private boolean infierno  = false;
     private Level level = null;
-    VillainPool pool;
-    VillainPool poolMonG;
+    private VillainPool pool;
+    private VillainPool poolMonG;
     int score = 0;
+    private GamePanel panel;
 
 
     LevelManager(GamePanel panel){
@@ -22,13 +24,15 @@ public class LevelManager {
         this.hero = Hero.getInstancia(tablero,panel,panel.KH);
         this.pool = VillainPool.getInstancia();
         pool.agregar(tablero);
+        this.panel = panel;
     }
 
 
     public void setNivel(int i){
         System.out.println("Estoy haciendo un nivel ...");
-        this.level = new Level(i, hero, tablero, pool,poolMonG);
+        this.level = new Level(i, hero, tablero, pool,poolMonG, panel);
         setTiempo(200);
+        this.infierno = false;
         level.crearNivel();
     }
 
@@ -62,19 +66,38 @@ public class LevelManager {
         if(!hero.isAlive() && hero.getVidas()!=0){
             vidaPerdida = true;
             vidaPerdida2 = true;
-            while(!pool.getInUse().isEmpty()){
-                hero.detach(pool.getInUse().getFirst());
-                pool.release(pool.getInUse().getFirst());
-                System.out.println("me guardé correctamente");
-            }
-        } else if(!hero.isAlive() && hero.getVidas()==0){
+            sacarVillanos();
+        }
+        if(!hero.isAlive() && hero.getVidas()==0){
             System.out.println("Perdio del todo");
             this.perder = true;
+        }
+        if(tiempo<0 && !pool.getInUse().isEmpty() && !infierno){
+            System.out.println("Esta es la cantidad de villanos original: " + level.getCopyVill());
+            int cant = pool.getInUse().size() + level.getCopyVill();
+            System.out.println("Esta es la cantidad de monedas a poner: " + cant);
+            infierno = true;
+            level.setInfierno(cant);
+            sacarVillanos();
+            tablero.resetVillanos();
+            level.agregarMonG();
         }
     }
     public void resetTablero(){
         tiempo = 200;
         tablero.vaciarTablero();
+    }
+
+    public void sacarVillanos(){
+        while(!pool.getInUse().isEmpty()){
+            hero.detach(pool.getInUse().getFirst());
+            if(pool.getInUse().getFirst() instanceof MonG || pool.getInUse().getFirst() instanceof Mon) {
+                pool.getInUse().getFirst().setIa(new MinSystem(pool.getInUse().getFirst(), tablero));
+            }
+            pool.release(pool.getInUse().getFirst());
+
+            System.out.println("me guardé correctamente");
+        }
     }
 
     public boolean isNivelCompletado(){

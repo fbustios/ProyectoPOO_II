@@ -7,6 +7,8 @@ public class Espon extends Villano{
     private String direction = "Up";
     private int cont = 48;
     private String d = "Down";
+    private String dI = "Nada";
+    private String dRandom = "Nada";
     private boolean canMove = true;
     private int spriteCounter;
     private int spriteNumber;
@@ -62,27 +64,34 @@ public class Espon extends Villano{
             a.setVillano(null);
             System.out.println("Me morí");
         }
-        d = getDireccion();
-        if(d == "Nada") {
-            if (cont == 48) {
-                int i = rand.nextInt(0, 4);
-                if (i == 0) {
-                    d = "Up";
-                } else if (i == 1) {
-                    d = "Down";
-                } else if (i == 2) {
-                    d = "Left";
-                } else if (i == 3) {
-                    d = "Right";
-                }
-                cont = 42;
+        dI = getDireccion();
+        System.out.println(" d si es nada");
+        if (cont == 48) {
+            System.out.println(" ya llegúe");
+            int i = rand.nextInt(0, 4);
+            if (i == 0) {
+                dRandom = "Up";
+            } else if (i == 1) {
+                dRandom = "Down";
+            } else if (i == 2) {
+                dRandom = "Left";
+            } else if (i == 3) {
+                dRandom = "Right";
             }
+            cont = 0;
+        }
+        if(dI.equals("Nada")){
+            d = dRandom;
+            cont++;
+        }else{
+            d = dI;
+            cont = 48;
         }
         if (d == "Up") {
             direction = "up";
             screenY -= velocidad;
 
-            if (screenY < x * 48 - 10) {
+            if (screenY < x * 48 - 48) {
                 canMove = move(-1,0);
                 if (!canMove) {
                     screenY += velocidad;
@@ -91,7 +100,7 @@ public class Espon extends Villano{
         } else if (d == "Down") {
             direction = "down";
             screenY += velocidad;
-            if (screenY > (x + 1) * 48 - 55) {
+            if (screenY > (x+1) * 48 - 55) {
                 canMove = move(1,0);
                 //System.out.println("Cambie de casilla abajo");
                 if (!canMove) {
@@ -101,7 +110,7 @@ public class Espon extends Villano{
         } else if (d  == "Left") {
             direction = "left";
             screenX -= velocidad;
-            if (screenX < y * 48 - 38) {
+            if (screenX < (y) * 48 - 38) {
                 canMove = move(0,-1);
                 //System.out.println(canMove);
                 if (!canMove) {
@@ -111,7 +120,7 @@ public class Espon extends Villano{
         } else if (d == "Right") {
             direction = "right";
             screenX += velocidad;
-            if (screenX > (y + 1) * 48 - 40) {
+            if (screenX > (y+1) * 48 - 10) {
                 canMove = move(0,1);
                 //System.out.println("Cambie de casilla a la derecha");
                 if (!canMove) {
@@ -119,7 +128,6 @@ public class Espon extends Villano{
                 }
             }
         }
-        cont++;
 
         spriteCounter ++;
         if(spriteCounter > 48){
@@ -162,12 +170,12 @@ public class Espon extends Villano{
             if(tab.getCoordenada(x,j).getMuroMetal()!=null)break;
             if(tab.getCoordenada(x,j).hayHero()) d =  "Right";
         }
-        for(int n = x; n > 0; n--){
+        for(int n = x; n >= 0; n--){
             if(tab.getCoordenada(n,y).getMuroMetal()!=null)break;
             if(tab.getCoordenada(n,y).hayHero()) d = "Up";
 
         }
-        for(int m = y; m > 0; m--){
+        for(int m = y; m >= 0; m--){
             if(tab.getCoordenada(x,m).getMuroMetal()!=null)break;
             if(tab.getCoordenada(x,m).hayHero()) d = "Left";
         }

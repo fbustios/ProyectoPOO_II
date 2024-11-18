@@ -7,6 +7,7 @@ public class Puerta {
     private boolean descubierta = false;
     private int x;
     private int y;
+    private boolean penalizacion = false;
 
     public Puerta(int x, int y) {
         this.x = x;
@@ -24,5 +25,11 @@ public class Puerta {
     }
     public int getY() {
         return y;
+    }
+    public boolean getPenalizacion(){
+        return this.penalizacion;
+    }
+    public void setPenalizacion(boolean t){
+        this.penalizacion = t;
     }
 }

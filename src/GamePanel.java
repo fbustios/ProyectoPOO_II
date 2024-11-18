@@ -43,7 +43,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     public void startGameThread(){
 
         lm.setNivel(nivelActual);
-        //esto hay que meterlo en start level
         if(lm.isVidaPerdido()){
             lm.resetTablero();
             System.out.println("me metí al gameThread");

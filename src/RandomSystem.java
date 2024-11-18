@@ -7,7 +7,7 @@ import java.util.Random;
 public class RandomSystem implements VillainMovement {
     private boolean canMove = true;
     private String direction = "hola";
-    private String d = "Down";
+    private String d = "Nada";
     private Villano v;
     private Tablero tablero;
     private int cont = 48;
@@ -78,7 +78,7 @@ public class RandomSystem implements VillainMovement {
         } else if (d == "Down") {
             direction = "down";
             screenY += velocidad;
-            if (screenY > (x + 1) * 48 - 55) {
+            if (screenY > (x + 1) * 48 - 38) {
                 canMove = move(1,0);
                 //System.out.println("Cambie de casilla abajo");
                 if (!canMove) {
@@ -98,7 +98,7 @@ public class RandomSystem implements VillainMovement {
         } else if (d == "Right") {
             direction = "right";
             screenX += velocidad;
-            if (screenX > (y + 1) * 48 - 40) {
+            if (screenX > (y + 1) * 48 - 38) {
                 canMove = move(0,1);
                 //System.out.println("Cambie de casilla a la derecha");
                 if (!canMove) {

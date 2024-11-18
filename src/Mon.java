@@ -33,11 +33,12 @@ public class Mon extends Villano{
 
         if(abs(x - this.x) < 7 && (y - this.y) < 7){
             ia.updateGraphics();
-            ia.draw(pincel);
+            //ia.draw(pincel);
         } else {
             ia2.updateGraphics();
-            ia2.draw(pincel);
+            //ia2.draw(pincel);
         }
+        ia.draw(pincel);
         System.out.println("x: " + this.x + " " + "y: " + this.y);
     }
 }

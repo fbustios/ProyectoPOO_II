@@ -18,14 +18,16 @@ public class Coordenada{
     private int y;
     private boolean cuponMuroRayado = false;
     private boolean cuponBombaRayado = false;
+    private boolean cuponBombaDorada = false;
     private boolean hayCupon = false;
     private boolean cuponSol = false;
     private boolean cuponPatin = false;
     private boolean cuponPregunta = false;
     private boolean cuponHombreLlamas = false;
+    private boolean hayDetonador = false;
     private String tipoMuro = "Cesped";
     private Villano villano;
-    private BufferedImage Cesped,CespedFloreado, Fuego, Bomba, Door;
+    private BufferedImage Cesped,CespedFloreado, Fuego, Bomba, Door, Coupon;
     int length = 48;
     int area = 48*48;  //area de cada coordenada 48 de largo y 48 ancho
 
@@ -47,6 +49,7 @@ public class Coordenada{
             Fuego = ImageIO.read(getClass().getResourceAsStream("\\Things\\Bomba14.png"));
             Bomba = ImageIO.read(getClass().getResourceAsStream("\\Things\\BombaCesped.png"));
             Door = ImageIO.read(getClass().getResourceAsStream("\\Things\\Puerta.png"));
+            Coupon = ImageIO.read(getClass().getResourceAsStream("\\Things\\CuponDorado.png"));
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -66,17 +69,18 @@ public class Coordenada{
         } else if(hayFuego) {
             image = Fuego;
             pincel.drawImage(image, y * 48, x * 48, 48, 48, null);
-        }else if(puerta!=null){
+        }else if(puerta!=null) {
             image = Door;
-            pincel.drawImage(image, y*48, x*48, 48, 48, null);
-        } else if(!hayMuro && hayCupon){
-            pincel.drawImage(image, y*48, x*48, 48, 48, null);
-            image = null;
+            pincel.drawImage(image, y * 48, x * 48, 48, 48, null);
         } else{
             image = Cesped;
             pincel.drawImage(image, y*48, x*48, 48, 48, null);
         }
-    }
+        if(!hayMuro && hayCupon){
+            System.out.println("Pintando cupon");
+            image = Coupon;
+            pincel.drawImage(image, y*48, x*48, 48, 48, null);
+    }}
 
 
     public boolean getHayMuro(){
@@ -105,6 +109,9 @@ public class Coordenada{
 
     public void setPuerta(Puerta puerta){
         this.puerta = puerta;
+    }
+    public Puerta getPuerta(){
+        return puerta;
     }
 
     public boolean getHayFuego(){
@@ -140,6 +147,13 @@ public class Coordenada{
 
     public void setVillano(Villano villano) {
         this.villano = villano;
+    }
+
+    public void setCuponBombaDorada(boolean t){
+        this.cuponBombaDorada = t;
+    }
+    public boolean getCuponBombaDorada(){
+        return this.cuponBombaDorada;
     }
 
     public void setCuponBombaRayado(boolean cuponBombaRayado) {
@@ -184,13 +198,19 @@ public class Coordenada{
         this.cuponMuroRayado = cuponMuroRayado;
     }
 
-    public void setPatin(boolean patin){
-        cuponPatin = patin;
+    public void setHayDetonador(boolean t){
+        this.hayDetonador = t;
+    }
+    public boolean hayDetonador(){
+        return this.hayDetonador;
     }
 
-    public void setPregunta(boolean pregunta ){
-        cuponPregunta = pregunta;
+    public boolean getHayCupon(){return hayCupon;}
+
+    public void setHayCupon(boolean hayCupon){
+        this.hayCupon = hayCupon;
     }
+
 
     public boolean hayHero(){
         return this.hero != null;
@@ -201,4 +221,5 @@ public class Coordenada{
     public int getY(){
         return this.y;
     }
+
 }

@@ -34,6 +34,8 @@ public class Tablero {
         Random rand = new Random();
         int cant = rand.nextInt(5,(tablero.length * tablero[0].length))/6;
         boolean ponerPuerta = true;
+        boolean ponerCupon = true;
+
         int colocados = 0;
         while(colocados<=cant){
             int idx = rand.nextInt(2, tablero.length);
@@ -69,6 +71,13 @@ public class Tablero {
         for(int i = 0; i<13; i++){
             for(int j = 0; j<15; j++){
                 tablero[i][j] = new Coordenada(i,j);
+            }
+        }
+    }
+    public void resetVillanos(){
+        for(int i = 0; i<13; i++){
+            for(int j = 0; j<15; j++){
+                tablero[i][j].setVillano(null);
             }
         }
     }

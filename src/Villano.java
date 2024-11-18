@@ -14,6 +14,7 @@ abstract public class Villano implements Observer {
     protected int y = 0;
     protected int screenX = 0;
     protected int screenY = 0;
+    protected boolean extra;
     protected Tablero tab;
     protected BufferedImage image, image0, image1;
     protected Hero hero;
@@ -29,6 +30,7 @@ abstract public class Villano implements Observer {
         this.pool = VillainPool.getInstancia();
         this.vivo = true;
         this.active = false;
+        this.extra = false;
     }
 
      public void update(int x, int y, Graphics2D pincel) {
@@ -108,5 +110,9 @@ abstract public class Villano implements Observer {
 
     public void setIa(VillainMovement s){
         this.ia = s;
+    }
+
+    public boolean isExtra(){
+        return this.extra;
     }
 }

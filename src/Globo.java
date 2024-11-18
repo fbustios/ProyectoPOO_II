@@ -4,7 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class Globo extends Villano{
-    public Globo(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
+    int cont = 2;
+    public Globo(Tablero tab, int nivelInicial,double velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
         this.ia = new RandomSystem(this,tab);
 
@@ -21,7 +22,7 @@ public class Globo extends Villano{
     public void update(int x, int y, Graphics2D pincel) {
         if(!vivo){
             System.out.println("me guardéeeeeeeeeeeeeee");
-            pool.release(this);
+            pool.release(this); cont = 2;
             return;
         }
         moverVillano(x,y,pincel);
@@ -29,8 +30,12 @@ public class Globo extends Villano{
 
     @Override
     public void moverVillano(int x, int y, Graphics2D pincel) {
-        ia.updateGraphics();
+
+        if(cont==0){
+            ia.updateGraphics(); cont = 2;
+        }
         ia.draw(pincel);
+        cont--;
     }
 
 }

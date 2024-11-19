@@ -42,7 +42,7 @@ public class Mon extends Villano{
                 //ia2.draw(pincel);
             }
             ia.draw(pincel);
-            System.out.println("x: " + this.x + " " + "y: " + this.y);
+            //System.out.println("x: " + this.x + " " + "y: " + this.y);
         }else{ia.draw(pincel);}
     }
 }

@@ -16,6 +16,7 @@ public class Level {
     private int spawnCounter = 0;
     private int spawnInterval = 300;
     private boolean puertaAbierta = false;
+    private int cont = 0;
     VillainPool pool;
     VillainPool poolMonG;
     private static Random rand = new Random();
@@ -93,7 +94,7 @@ public class Level {
     public void agregarCupon(){
         coupon = CM.obtainCoupon(numNivel);
         boolean colocado = false;
-
+        if(!coupon.activo){
         while (!colocado) {
             int idx = rand.nextInt(2, 13);
             int idx2 = rand.nextInt(2, 15);
@@ -104,7 +105,7 @@ public class Level {
                 coupon.marcar(c,true);
                 colocado = true;
             }
-        }
+        }}
     }
 
     public void explotarTesoroOculto(){
@@ -118,6 +119,7 @@ public class Level {
 
     public void actualizarNivel() {
         if(numNivel%5==0) {
+            tab.setPuerta(false);
             hero.setInvencible(true);
             if (spawnCounter >= spawnInterval && cantVill != 0) {
                 agregarVillano();
@@ -131,18 +133,22 @@ public class Level {
             while(cantVill != 0) {
                 agregarVillano();
                 cantVill--;
+                cont++;
             }
         }
         if(ponerCupon){
             agregarCupon();
             ponerCupon = false;
         }
-        if (pool.getInUse().isEmpty()) {
+        if (pool.getInUse().isEmpty() && numNivel%5 != 0 && cont >= 2) {
             tab.setPuerta(true);
             if(sonidoPuerta){
             panel.playSoundEffect(4);
             sonidoPuerta = false;}
             this.puertaAbierta = true;
+        }
+        if(tab.getPuerta().getPenalizacion()){
+            explotarTesoroOculto();
         }
     }
 

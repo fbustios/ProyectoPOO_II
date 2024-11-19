@@ -50,6 +50,8 @@ public class Tablero {
                 colocados ++;
             }
         }
+        tablero[10][10].setMuroLadrillo();
+        tablero[5][8].setMuroLadrillo();
     }
 
     public Coordenada getCoordenada(int x, int y){
@@ -93,5 +95,9 @@ public class Tablero {
     }
     public Puerta getPuerta(){
         return puerta;
+    }
+
+    public void setPuertaNull(){
+        this.puerta = null;
     }
 }

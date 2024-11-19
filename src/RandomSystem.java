@@ -27,7 +27,7 @@ public class RandomSystem implements VillainMovement {
         Coordenada n = tablero.getCoordenada(v.getX() + dx,  v.getY() + dy);
         Coordenada a = tablero.getCoordenada(v.getX(), v.getY());
         if (n != null) {
-            if (!n.getHayMuro() || (v.getAtm()&& n.getMuroMetal()==null) && n.getBomb() == null) {
+            if (!n.getHayMuro() || ((v.getAtm()&& n.getMuroMetal()==null) && n.getBomb() == null)) {
                 n.setVillano(v);
                 a.setVillano(null);
                 v.setXY(v.getX()+dx, v.getY()+dy);

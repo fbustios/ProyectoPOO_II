@@ -14,6 +14,7 @@ public class Bomb {
 
     public void explode(Tablero tab){
         Coordenada a = tab.getCoordenada(x,y);
+        Puerta p = tab.getPuerta();
         a.setBomb(null);
         a.setHayFuego(1000);
         boolean left = true;
@@ -28,8 +29,8 @@ public class Bomb {
                     n.getBomb().explode(tab);
                 }
                 n.setHayFuego(1000);
-                if(n.getPuerta() != null || (n.getHayCupon()) && !n.getHayMuro()){
-                    n.getPuerta().setPenalizacion(true);
+                if(p != null && ((n.getHayCupon()) && !n.getHayMuro() || n.getPuerta() !=null) && this.segunda){
+                    p.setPenalizacion(true);
                 }
             } else down = false;
             Coordenada n2 = tab.getCoordenada(x-i,y);
@@ -39,8 +40,8 @@ public class Bomb {
                     n2.getBomb().explode(tab);
                 }
                 n2.setHayFuego(1000);
-                if(n2.getPuerta() != null || (n2.getHayCupon()&&!n2.getHayMuro())){
-                    n2.getPuerta().setPenalizacion(true);
+                if(p != null && ((n2.getHayCupon()) && !n2.getHayMuro() || n2.getPuerta() !=null) && this.segunda){
+                    p.setPenalizacion(true);
                 }
             } else up = false;
             Coordenada n3 = tab.getCoordenada(x,y+i);
@@ -49,8 +50,8 @@ public class Bomb {
                     n3.getBomb().setSegunda(true);
                     n3.getBomb().explode(tab);
                 }
-                if(n3.getPuerta() != null || (n3.getHayCupon())&&!n3.getHayMuro()){
-                    n3.getPuerta().setPenalizacion(true);
+                if(p != null && ((n3.getHayCupon()) && !n3.getHayMuro() || n3.getPuerta() !=null) && this.segunda){
+                    p.setPenalizacion(true);
                 }
                 n3.setHayFuego(1000);
             } else right = false;
@@ -60,8 +61,8 @@ public class Bomb {
                     n4.getBomb().setSegunda(true);
                     n4.getBomb().explode(tab);
                 }
-                if(n4.getPuerta() != null || (n4.getHayCupon()&&!n4.getHayMuro())){
-                    n4.getPuerta().setPenalizacion(true);
+                if(p != null && ((n4.getHayCupon()) && !n4.getHayMuro() || n4.getPuerta() !=null) && this.segunda){
+                    p.setPenalizacion(true);
                 }
                 n4.setHayFuego(1000);
             } else left = false;

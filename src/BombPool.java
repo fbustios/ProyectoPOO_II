@@ -48,4 +48,14 @@ public class BombPool {
         }
         return instancia;
     }
+    public void resetRango(){
+        for(Bomb bomba: disponibles){
+            bomba.setRango(1);
+        }
+    }
+    public void resetCantidad(){
+        while(disponibles.size()>1){
+            disponibles.poll();
+        }
+    }
 }

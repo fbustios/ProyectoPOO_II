@@ -61,6 +61,7 @@ public class LevelManager {
         if(level.isPuertaAbierta() && tablero.getPuertaX() == hero.getX() && tablero.getPuertaY() == hero.getY()){
             nivelCompletado = true;
             hero.reposition();
+            if(!pool.getInUse().isEmpty()) sacarVillanos();
             System.out.println("Nivel completado");
         }
         if(!hero.isAlive() && hero.getVidas()!=0){
@@ -81,6 +82,12 @@ public class LevelManager {
             sacarVillanos();
             tablero.resetVillanos();
             level.agregarMonG();
+        }
+        if(tiempo < 0 && level.getNumNivel()%5 == 0){
+            nivelCompletado = true;
+            hero.reposition();
+            sacarVillanos();
+            System.out.println("Nivel completado");
         }
     }
     public void resetTablero(){

@@ -88,10 +88,7 @@ public class Hero implements Subject{
            puedeMoverse = !coordenada.getHayMuro();
        }
         if(!bombaRayado){
-            if(coordenada.getBomb()==null){
-                puedeMoverse = true;
-            }
-            else{puedeMoverse = false;}
+           puedeMoverse&= coordenada.getBomb() == null;
         }
        return puedeMoverse;
     }
@@ -137,8 +134,6 @@ public class Hero implements Subject{
     public void resetHero(){
         detonador = null;
         bombaRayado = false;
-        //falta el metodo de bombpool para quitar capacidad(bomba dorada)
-        //quitar rango tambien(sol)
         invencible = false;
         muroRayado = false;
         invulFuego = false;
@@ -160,7 +155,7 @@ public class Hero implements Subject{
         Coordenada n = tablero.getCoordenada(posicion[0] + dx, posicion[1] + dy);
         Coordenada a = tablero.getCoordenada(posicion[0], posicion[1]);
         if (n != null) {
-            if (!n.getHayMuro()) { //aqui falta el verificar de arriba que toma en cuenta cupones
+            if (verificar(posicion[0] + dx, posicion[1] + dy)) { //aqui falta el verificar de arriba que toma en cuenta cupones
                 n.setHero(this);
                 a.setHero(null);
                 posicion[0] += dx;

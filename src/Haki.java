@@ -53,7 +53,7 @@ public class Haki extends Villano{
             }
             ia.draw(pincel);
             cont++;
-            System.out.println("x: " + this.x + " " + "y: " + this.y);
+            //System.out.println("x: " + this.x + " " + "y: " + this.y);
         }else{ia.draw(pincel);}
     }
 }

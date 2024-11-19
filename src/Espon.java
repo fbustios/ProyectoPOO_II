@@ -5,16 +5,15 @@ import java.util.Random;
 
 public class Espon extends Villano{
     private String direction = "Up";
-    private int cont = 48;
+    private int cont = 3;
     private String d = "Down";
-    private String dI = "Nada";
-    private String dRandom = "Nada";
     private boolean canMove = true;
     private int spriteCounter;
     private int spriteNumber;
     private int num = 1;
     public Espon(Tablero tab, int nivelInicial,int velocidad,int puntaje, boolean atm){
         super(tab,nivelInicial,velocidad,atm,puntaje);
+        ia = new RandomSystem(this,tab);
         try{
             image0 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Barril0.png"));
             image1 = ImageIO.read(getClass().getResourceAsStream("\\Villains\\Barril2.png"));
@@ -39,9 +38,21 @@ public class Espon extends Villano{
 
     @Override
     public void moverVillano(int x, int y, Graphics2D pincel, GamePanel panel) {
-        if(panel.gameState == 1){updateGraphics();}
-        draw(pincel);
-    }
+        if(panel.gameState == 1){
+            if(cont == 0){
+                if(getDireccion().equals("Nada")) {
+                    ia.updateGraphics();
+                }else {
+                    updateGraphics();
+
+                }
+                cont = 3;
+            }
+            draw(pincel);
+            cont--;
+        System.out.println(getDireccion());
+
+    }}
     public boolean move(int dx, int dy) {
         Coordenada n = tab.getCoordenada(x + dx,  y + dy);
         Coordenada a = tab.getCoordenada(x, y);
@@ -60,35 +71,12 @@ public class Espon extends Villano{
     }
 
     public void updateGraphics() {
-        Random rand = new Random();
         Coordenada a = tab.getCoordenada(x, y);
+        d = getDireccion();
         if(a.getHayFuego()){
             vivo = false;
             a.setVillano(null);
             System.out.println("Me morí");
-        }
-        dI = getDireccion();
-        System.out.println(" d si es nada");
-        if (cont == 48) {
-            System.out.println(" ya llegúe");
-            int i = rand.nextInt(0, 4);
-            if (i == 0) {
-                dRandom = "Up";
-            } else if (i == 1) {
-                dRandom = "Down";
-            } else if (i == 2) {
-                dRandom = "Left";
-            } else if (i == 3) {
-                dRandom = "Right";
-            }
-            cont = 0;
-        }
-        if(dI.equals("Nada")){
-            d = dRandom;
-            cont++;
-        }else{
-            d = dI;
-            cont = 48;
         }
         if (d == "Up") {
             direction = "up";
@@ -103,7 +91,7 @@ public class Espon extends Villano{
         } else if (d == "Down") {
             direction = "down";
             screenY += velocidad;
-            if (screenY > (x+1) * 48 - 55) {
+            if (screenY > (x+1) * 48 ) {
                 canMove = move(1,0);
                 //System.out.println("Cambie de casilla abajo");
                 if (!canMove) {
@@ -113,7 +101,7 @@ public class Espon extends Villano{
         } else if (d  == "Left") {
             direction = "left";
             screenX -= velocidad;
-            if (screenX < (y) * 48 - 38) {
+            if (screenX < (y) * 48 - 48) {
                 canMove = move(0,-1);
                 //System.out.println(canMove);
                 if (!canMove) {
@@ -123,7 +111,7 @@ public class Espon extends Villano{
         } else if (d == "Right") {
             direction = "right";
             screenX += velocidad;
-            if (screenX > (y+1) * 48 - 10) {
+            if (screenX > (y+1) * 48 ) {
                 canMove = move(0,1);
                 //System.out.println("Cambie de casilla a la derecha");
                 if (!canMove) {
@@ -146,14 +134,11 @@ public class Espon extends Villano{
     }
 
     public void draw(Graphics2D pincel){
-        System.out.println(x + " " + y);
-        System.out.println(screenX + " " + screenY);
-
         if(spriteNumber==1){image = image0;}
         if(spriteNumber==2){image = image1;}
 
         if(active){
-            System.out.println("Estoy activo");
+            //System.out.println("Estoy activo");
             pincel.drawImage(image0, screenX, screenY, tab.getCoordenada(1,1).length, tab.getCoordenada(1,1).length, null);
         }
     }

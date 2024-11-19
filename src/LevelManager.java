@@ -30,7 +30,8 @@ public class LevelManager {
     public void setNivel(int i){
         System.out.println("Estoy haciendo un nivel ...");
         this.level = new Level(i, hero, tablero, pool,poolMonG, panel);
-        setTiempo(200);
+        if(i%5==0) setTiempo(30);
+        else setTiempo(200);
         this.infierno = false;
         level.crearNivel();
     }
@@ -71,7 +72,7 @@ public class LevelManager {
             System.out.println("Perdio del todo");
             this.perder = true;
         }
-        if(tiempo<0 && !pool.getInUse().isEmpty() && !infierno){
+        if(tiempo<0 && !pool.getInUse().isEmpty() && !infierno && level.getNumNivel()%5!=0){
             System.out.println("Esta es la cantidad de villanos original: " + level.getCopyVill());
             int cant = pool.getInUse().size() + level.getCopyVill();
             System.out.println("Esta es la cantidad de monedas a poner: " + cant);

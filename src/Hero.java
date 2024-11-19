@@ -45,7 +45,7 @@ public class Hero implements Subject{
         posicion[0] = 0;
         posicion[1] = 0;
         tablero = tab;
-        velocidad = 1;
+        velocidad = 2;
         panel = pane;
         X = 0;
         Y = 0;
@@ -75,7 +75,7 @@ public class Hero implements Subject{
             posicion[1] = 0;
             X = 0;
             Y = 0;
-            velocidad = 1;
+            velocidad = 2;
             return false;
         }
         return true;
@@ -146,7 +146,7 @@ public class Hero implements Subject{
         posicion[1] = 0;
         X = 0;
         Y = 0;
-        velocidad = 1;
+        velocidad = 2;
     }
 
     public void reposition(){

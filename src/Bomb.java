@@ -59,7 +59,6 @@ public class Bomb {
                 if(n4.getBomb() != null){
                     n4.getBomb().setSegunda(true);
                     n4.getBomb().explode(tab);
-
                 }
                 if(n4.getPuerta() != null || (n4.getHayCupon()&&!n4.getHayMuro())){
                     n4.getPuerta().setPenalizacion(true);

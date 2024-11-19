@@ -47,6 +47,7 @@ public class Level {
             sonidoPuerta = true;
             infierno = 0;
 
+
     }
 
     public void agregarVillano(){
@@ -97,6 +98,7 @@ public class Level {
             int idx = rand.nextInt(2, 13);
             int idx2 = rand.nextInt(2, 15);
             Coordenada c = tab.getCoordenada(idx,idx2);
+            System.out.println("estoy enciclado");
             if (!(c.getMuroLadrillo() == null) && (c.getPuerta() == null)) {
                 System.out.println("Colocando cupon ...");
                 coupon.marcar(c,true);

@@ -29,6 +29,7 @@ public class Fant extends Villano{
             System.out.println("me guardéeeeeeeeeeeeeee");
             panel.mensajes.mostrarMensaje(String.valueOf(puntaje));
             ScoreBoard.getInstance().sumScore(puntaje,num);
+            panel.playSoundEffect(7);
             pool.release(this);
             return;
         }

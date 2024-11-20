@@ -5,7 +5,7 @@ import java.net.URL;
 
 public class Sonido {
     Clip clip;
-    URL[] soundURL = new URL[5];
+    URL[] soundURL = new URL[8];
 
     public Sonido() {
         soundURL[0] = getClass().getResource("\\Sounds\\cinderella_clown.wav");
@@ -13,6 +13,9 @@ public class Sonido {
         soundURL[2] = getClass().getResource("\\Sounds\\mario_is_a_weenie.wav");
         soundURL[3] = getClass().getResource("\\Sounds\\putbomb.wav");
         soundURL[4] = getClass().getResource("\\Sounds\\winlevel.wav");
+        soundURL[5] = getClass().getResource("\\Sounds\\bonus.wav");
+        soundURL[6] = getClass().getResource("\\Sounds\\gameover.wav");
+        soundURL[7] = getClass().getResource("\\Sounds\\energizer.wav");
     }
 
     public void setFile(int i) {

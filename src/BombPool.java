@@ -6,6 +6,7 @@ public class BombPool {
     private int cantidad = 1;
     private Queue<Bomb> disponibles = new LinkedList<>();
     private Queue<Bomb> enUso = new LinkedList<>();
+    private int rango = 1;
 
     //crea la cantidad de bombas que se pueden tener al mismo tiempo
     public BombPool(){
@@ -29,12 +30,15 @@ public class BombPool {
     }
 
     public void aplicarBombaDorada(){
-        disponibles.add(new Bomb());
+        Bomb b = new Bomb();
+        b.setRango(rango);
+        disponibles.add(b);
     }
 
     public void actualizarRango(int nuevoRango){
+        rango+=nuevoRango;
         for(Bomb bomba: disponibles){
-            bomba.setRango(bomba.getRango()+nuevoRango);
+            bomba.setRango(rango);
         }
     }
 

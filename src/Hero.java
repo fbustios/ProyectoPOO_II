@@ -25,9 +25,11 @@ public class Hero implements Subject{
     private boolean invulFuego = false;
     private boolean patin = false;
     private GamePanel panel;
+    private boolean invulFuegoTemp = false;
     private KeyHandler kh;
     private int X;
     private int Y;
+    private int rango = 1;
     private boolean canMove = true;
     private BombPool bombas = BombPool.getBombPool();
     private long lastScore = 0;
@@ -64,6 +66,7 @@ public class Hero implements Subject{
     public boolean restarVida(){
         Coordenada coordenada = tablero.getCoordenada(posicion[0], posicion[1]);
         if(((!invulFuego && coordenada.getHayFuego())||coordenada.getVillano()!=null) && !invencible){
+            panel.playSoundEffect(6);
             vidas -= 1;
             if(detonador!=null) detonador.retrieveBombs(tablero,panel);
             detonador = null;
@@ -85,11 +88,12 @@ public class Hero implements Subject{
         boolean puedeMoverse = true;
         Coordenada coordenada = tablero.getCoordenada(x, y);
         if(!muroRayado){
-           puedeMoverse = !coordenada.getHayMuro();
+           puedeMoverse = !(coordenada.getHayMuro());
        }
         if(!bombaRayado){
            puedeMoverse&= coordenada.getBomb() == null;
         }
+        puedeMoverse&= coordenada.getMuroMetal() == null;
        return puedeMoverse;
     }
 
@@ -323,44 +327,58 @@ public class Hero implements Subject{
     public void checkState(){
         Coordenada a = tablero.getCoordenada(posicion[0],posicion[1]);
         if(a.getCuponPatin()){
+            panel.playSoundEffect(5);
             this.patin = true;
             this.velocidad++;
             a.setCuponPatin(false);
             a.setHayCupon(false);
         }
         if(a.getCuponMuroRayado()){
+            panel.playSoundEffect(5);
             this.muroRayado = true;
             a.setCuponMuroRayado(false);
             a.setHayCupon(false);
         }
         if(a.getCuponBombaRayado()){
+            panel.playSoundEffect(5);
             this.bombaRayado = true;
             a.setCuponBombaRayado(false);
             a.setHayCupon(false);
         }
         if(a.getCuponHombreLlamas()){
+            panel.playSoundEffect(5);
             this.invulFuego = true;
             a.setCuponHombreLlamas(false);
             a.setHayCupon(false);
         }
         if(a.getCuponPregunta()){
+            panel.playSoundEffect(5);
             this.invulFuego = true; //falta lo del tiempo;
             a.setCuponPregunta(false);
             a.setHayCupon(false);
         }
         if(a.getCuponSol()){
+            panel.playSoundEffect(5);
             a.setCuponSol(false);
+            rango+=2;
             bombas.actualizarRango(2);
             System.out.println("agarré el cupón");
             a.setHayCupon(false);
+            a.setCuponSol(false);
         }
         if(a.hayDetonador()){
+            panel.playSoundEffect(5);
             detonador = new Detonador();
+            a.setHayDetonador(false);
             a.setHayDetonador(false);
             a.setHayCupon(false);
         }
         if(a.getCuponBombaDorada()){
+            panel.playSoundEffect(5);
             bombas.aplicarBombaDorada();
+            a.setHayCupon(false);
+            a.setCuponBombaDorada(false);
+            System.out.println("agarré bomba dorada");
         }
         if(ScoreBoard.getInstance().getScore()%100000==0 && ScoreBoard.getInstance().getScore()!=lastScore){
             lastScore = ScoreBoard.getInstance().getScore();

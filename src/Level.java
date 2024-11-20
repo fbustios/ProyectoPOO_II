@@ -91,6 +91,46 @@ public class Level {
         }
     }
 
+    public void agregarVillano2(){
+        shuffle(pool.getNotInUse());
+        Villano v = null;
+        if(copyVill != 0) {
+            for(int i = 0; i < pool.getNotInUse().size(); i++) {
+                v = pool.obtain(i);
+                if(infierno == 0){
+                    if (v.getNivelInicial() <= numNivel) {
+                        break;
+                    } else {
+                        pool.release(v);}
+                } else {
+                    if (v.getNivelInicial() == 14) {
+                        break;
+                    } else {
+                        pool.release(v);}
+                }
+
+                System.out.println("llegué aquí 1");
+            }
+        }
+        if(copyVill != 0 && v!=null) {
+            //System.out.println("En proceso de colocar villanos ...");
+            boolean colocado = false;
+            while (!colocado) {
+                System.out.println("Colocando villanos ...");
+                int idx = rand.nextInt(2, 13);
+                int idx2 = rand.nextInt(2, 15);
+                Coordenada c = tab.getCoordenada(idx,idx2);
+                if (!c.getHayMuro()) {
+                    v.setXY(idx,idx2);
+                    v.setScreenXY(idx2*48,idx*48);
+                    c.setVillano(v);
+                    hero.attach(v);
+                    colocado = true;
+                }
+            }
+        }
+    }
+
     public void agregarCupon(){
         coupon = CM.obtainCoupon(numNivel);
         boolean colocado = false;
@@ -110,8 +150,11 @@ public class Level {
 
     public void explotarTesoroOculto(){
         numNivel++;
-        while(villanosRestantes>0) {
-            agregarVillano();
+        dispo(numNivel);
+        while(copyVill>0) {
+            System.out.println("me metí al while");
+            agregarVillano2();
+            copyVill--;
         }
         numNivel--;
     }
@@ -148,6 +191,8 @@ public class Level {
             this.puertaAbierta = true;
         }
         if(tab.getPuerta().getPenalizacion()){
+            System.out.println("me metí a la penalización");
+            tab.getPuerta().setPenalizacion(false);
             explotarTesoroOculto();
         }
     }
@@ -161,6 +206,17 @@ public class Level {
             cantVill = rand.nextInt(5,9);
         } else {
             cantVill = rand.nextInt(8,11);
+        }
+    }
+
+    public void dispo(int i){
+        Random rand = new Random();
+        if(i < 5){
+            copyVill = rand.nextInt(2,5);
+        } else if(i <= 10){
+            copyVill = rand.nextInt(5,9);
+        } else {
+            copyVill = rand.nextInt(8,11);
         }
     }
 

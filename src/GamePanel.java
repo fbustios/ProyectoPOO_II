@@ -14,7 +14,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
     Sonido sonido = new Sonido();
 
     LevelManager lm = new LevelManager(this);
-    int nivelActual = 1;
+    int nivelActual = 5;
 
     int gameState = 1;
 
